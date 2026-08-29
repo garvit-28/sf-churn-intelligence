@@ -1,0 +1,812 @@
+Account_Ref,Case_Type,Priority,Is_Escalated,Days_To_Resolve,Status
+ACC-0001,Feature Request,High,0,2,Closed
+ACC-0002,Technical / Bug,Medium,0,1,Working
+ACC-0002,Technical / Bug,Medium,1,4,Escalated
+ACC-0003,Feature Request,Medium,1,2,Closed
+ACC-0003,Billing,Low,1,0,Closed
+ACC-0003,Billing,Low,0,8,Closed
+ACC-0003,Technical / Bug,Medium,0,10,Closed
+ACC-0004,Billing,Medium,1,3,Closed
+ACC-0004,Technical / Bug,Medium,1,13,Closed
+ACC-0004,Billing,Medium,0,1,Closed
+ACC-0004,Billing,Low,0,2,Closed
+ACC-0005,Billing,High,0,1,Closed
+ACC-0005,Billing,Medium,0,0,Working
+ACC-0005,Billing,High,0,5,Closed
+ACC-0007,Billing,Medium,0,2,Closed
+ACC-0007,Billing,High,1,4,Working
+ACC-0007,Technical / Bug,Medium,1,0,New
+ACC-0007,Technical / Bug,High,0,1,Closed
+ACC-0008,Billing,Low,1,6,Working
+ACC-0008,Feature Request,Medium,0,0,Closed
+ACC-0008,Billing,High,0,0,Closed
+ACC-0008,Billing,Medium,1,0,New
+ACC-0008,Performance / Latency,Medium,0,3,Closed
+ACC-0008,Billing,Critical,1,4,Working
+ACC-0008,Billing,High,1,8,Closed
+ACC-0009,Technical / Bug,Low,0,4,Escalated
+ACC-0009,Technical / Bug,Medium,0,3,Working
+ACC-0010,Technical / Bug,Low,0,1,Closed
+ACC-0010,Billing,Low,0,0,Closed
+ACC-0011,Billing,Low,0,8,Closed
+ACC-0012,Technical / Bug,High,0,2,Closed
+ACC-0012,Billing,High,1,8,Closed
+ACC-0012,Feature Request,Critical,0,0,Closed
+ACC-0012,Technical / Bug,Critical,1,3,Closed
+ACC-0012,Billing,High,1,28,Closed
+ACC-0012,Billing,Medium,0,0,Escalated
+ACC-0013,Billing,High,1,12,Closed
+ACC-0013,Technical / Bug,High,0,3,Escalated
+ACC-0014,Feature Request,Medium,0,0,New
+ACC-0014,Onboarding,Medium,0,3,Closed
+ACC-0014,Billing,Medium,0,0,Closed
+ACC-0015,Performance / Latency,Critical,1,3,Closed
+ACC-0015,Billing,Medium,0,0,Closed
+ACC-0015,Billing,Low,0,6,Closed
+ACC-0015,Technical / Bug,High,1,27,Closed
+ACC-0015,Performance / Latency,High,1,12,Closed
+ACC-0015,Technical / Bug,Low,0,1,Closed
+ACC-0016,Billing,Medium,0,6,Closed
+ACC-0016,Billing,Medium,1,11,Closed
+ACC-0016,Technical / Bug,Medium,0,0,New
+ACC-0017,Feature Request,Low,0,3,Closed
+ACC-0017,Billing,Low,0,5,Closed
+ACC-0017,Feature Request,High,1,12,Closed
+ACC-0017,Technical / Bug,High,0,2,Closed
+ACC-0017,Technical / Bug,Low,1,1,Working
+ACC-0018,Technical / Bug,Critical,1,8,Closed
+ACC-0018,Billing,Medium,1,2,Closed
+ACC-0018,Technical / Bug,Medium,1,15,Escalated
+ACC-0018,Onboarding,Medium,1,3,Closed
+ACC-0018,Feature Request,High,1,0,Escalated
+ACC-0019,Performance / Latency,Low,0,1,Working
+ACC-0019,Technical / Bug,High,0,0,Escalated
+ACC-0019,Performance / Latency,Medium,0,2,Closed
+ACC-0019,Performance / Latency,Low,0,8,Working
+ACC-0020,Technical / Bug,Medium,0,6,Closed
+ACC-0020,Billing,Medium,0,4,Closed
+ACC-0021,Technical / Bug,Low,0,3,Closed
+ACC-0021,Technical / Bug,Medium,0,4,Closed
+ACC-0021,Feature Request,Medium,0,6,Closed
+ACC-0021,Feature Request,Critical,1,4,Closed
+ACC-0021,Feature Request,Medium,0,1,Closed
+ACC-0022,Feature Request,Medium,0,0,Closed
+ACC-0022,Technical / Bug,Low,0,0,Closed
+ACC-0023,Performance / Latency,Medium,1,9,Working
+ACC-0023,Technical / Bug,High,1,12,Closed
+ACC-0023,Technical / Bug,High,0,3,Working
+ACC-0024,Billing,Low,0,0,Closed
+ACC-0024,Performance / Latency,Low,0,9,New
+ACC-0025,Technical / Bug,Medium,0,0,Closed
+ACC-0025,Feature Request,High,1,37,Working
+ACC-0026,Technical / Bug,Medium,1,0,Working
+ACC-0026,Technical / Bug,Medium,0,0,New
+ACC-0026,Technical / Bug,High,0,5,Closed
+ACC-0026,Feature Request,High,0,3,Closed
+ACC-0027,Technical / Bug,Medium,0,2,Closed
+ACC-0027,Billing,Medium,1,8,Closed
+ACC-0027,Billing,Low,0,5,Closed
+ACC-0027,Feature Request,Low,0,3,Closed
+ACC-0029,Technical / Bug,High,0,0,Closed
+ACC-0029,Technical / Bug,High,0,0,Closed
+ACC-0029,Feature Request,High,0,0,Closed
+ACC-0029,Billing,Medium,0,3,Closed
+ACC-0029,Feature Request,High,0,0,Escalated
+ACC-0031,Billing,Medium,1,55,Closed
+ACC-0033,Onboarding,High,1,5,Working
+ACC-0033,Feature Request,High,0,0,Closed
+ACC-0033,Billing,Medium,1,28,Closed
+ACC-0034,Technical / Bug,Medium,0,3,Closed
+ACC-0034,Performance / Latency,Low,0,4,Closed
+ACC-0034,Technical / Bug,High,0,4,Closed
+ACC-0034,Feature Request,High,1,18,Closed
+ACC-0035,Onboarding,Medium,0,2,Closed
+ACC-0035,Technical / Bug,Medium,0,0,Working
+ACC-0035,Performance / Latency,High,0,0,Closed
+ACC-0039,Technical / Bug,Low,1,3,Escalated
+ACC-0039,Billing,High,1,39,Closed
+ACC-0039,Performance / Latency,Low,0,0,Closed
+ACC-0041,Billing,High,1,26,Closed
+ACC-0041,Feature Request,High,1,7,Closed
+ACC-0041,Onboarding,Medium,0,2,Closed
+ACC-0041,Billing,High,1,3,Closed
+ACC-0042,Feature Request,Medium,0,12,Closed
+ACC-0043,Billing,Low,0,1,New
+ACC-0043,Technical / Bug,Low,0,4,Escalated
+ACC-0043,Technical / Bug,Medium,0,13,Closed
+ACC-0043,Technical / Bug,Low,1,1,Escalated
+ACC-0043,Technical / Bug,Medium,0,2,Closed
+ACC-0043,Technical / Bug,Medium,1,5,Closed
+ACC-0043,Billing,Low,0,10,Working
+ACC-0043,Technical / Bug,Low,0,5,Closed
+ACC-0043,Technical / Bug,Critical,1,21,New
+ACC-0046,Technical / Bug,Medium,0,2,Closed
+ACC-0046,Billing,Critical,1,22,Closed
+ACC-0046,Billing,High,1,9,Closed
+ACC-0046,Performance / Latency,Medium,1,9,Closed
+ACC-0047,Billing,Medium,0,2,Closed
+ACC-0047,Billing,Medium,0,1,Escalated
+ACC-0048,Performance / Latency,Medium,0,2,Closed
+ACC-0049,Feature Request,Low,1,1,Working
+ACC-0049,Technical / Bug,High,0,0,Closed
+ACC-0049,Technical / Bug,Medium,0,0,Closed
+ACC-0050,Billing,High,1,2,Closed
+ACC-0050,Technical / Bug,Low,0,0,Closed
+ACC-0050,Billing,High,1,2,Escalated
+ACC-0050,Performance / Latency,Critical,1,1,Closed
+ACC-0051,Technical / Bug,Low,0,2,Closed
+ACC-0052,Technical / Bug,Medium,0,2,Closed
+ACC-0052,Billing,Medium,1,5,Working
+ACC-0052,Billing,Medium,0,1,Closed
+ACC-0052,Performance / Latency,High,1,16,Closed
+ACC-0053,Billing,Medium,0,1,Closed
+ACC-0053,Billing,High,0,0,Closed
+ACC-0053,Feature Request,Low,1,4,Working
+ACC-0053,Performance / Latency,Medium,0,0,Escalated
+ACC-0054,Technical / Bug,Medium,0,1,Closed
+ACC-0054,Feature Request,Low,0,0,Working
+ACC-0054,Billing,Medium,0,1,Working
+ACC-0054,Technical / Bug,High,0,1,New
+ACC-0055,Performance / Latency,Medium,0,0,Closed
+ACC-0056,Onboarding,High,1,6,Closed
+ACC-0056,Feature Request,Low,0,12,Closed
+ACC-0057,Technical / Bug,Medium,0,7,Closed
+ACC-0058,Feature Request,Low,0,2,Closed
+ACC-0058,Technical / Bug,Medium,1,3,Closed
+ACC-0059,Feature Request,Low,0,1,Closed
+ACC-0060,Billing,Low,0,1,Closed
+ACC-0060,Billing,High,0,1,Closed
+ACC-0062,Billing,High,1,20,Closed
+ACC-0062,Technical / Bug,Critical,0,3,Closed
+ACC-0062,Onboarding,Low,0,2,Closed
+ACC-0064,Billing,High,1,11,Working
+ACC-0064,Feature Request,Low,1,4,Closed
+ACC-0064,Billing,Low,0,0,Closed
+ACC-0064,Billing,Medium,0,4,Closed
+ACC-0064,Billing,High,0,2,Closed
+ACC-0064,Technical / Bug,Medium,1,9,Escalated
+ACC-0065,Technical / Bug,High,1,17,Closed
+ACC-0066,Billing,Medium,1,1,Working
+ACC-0066,Billing,High,1,3,Closed
+ACC-0066,Feature Request,Medium,0,3,Escalated
+ACC-0068,Performance / Latency,High,1,32,Closed
+ACC-0068,Performance / Latency,High,1,9,Closed
+ACC-0068,Feature Request,Medium,0,3,Working
+ACC-0068,Billing,Low,1,30,Closed
+ACC-0068,Technical / Bug,Low,0,3,Closed
+ACC-0068,Technical / Bug,High,0,0,Closed
+ACC-0069,Technical / Bug,High,0,6,Closed
+ACC-0069,Feature Request,Medium,0,2,Closed
+ACC-0069,Feature Request,Low,0,2,Closed
+ACC-0069,Billing,Low,0,1,Closed
+ACC-0069,Performance / Latency,Low,0,0,Escalated
+ACC-0070,Feature Request,High,0,4,Closed
+ACC-0070,Technical / Bug,Medium,0,1,Closed
+ACC-0072,Billing,High,0,9,Closed
+ACC-0073,Onboarding,Medium,0,0,Closed
+ACC-0073,Feature Request,High,0,0,Closed
+ACC-0073,Billing,Medium,0,0,Closed
+ACC-0074,Feature Request,High,1,9,Escalated
+ACC-0074,Feature Request,Medium,0,0,Closed
+ACC-0074,Technical / Bug,Medium,0,0,Closed
+ACC-0075,Technical / Bug,Critical,1,0,Closed
+ACC-0077,Technical / Bug,Medium,0,3,Closed
+ACC-0077,Feature Request,Medium,0,0,New
+ACC-0077,Feature Request,Medium,0,1,Closed
+ACC-0078,Billing,Low,0,1,Closed
+ACC-0078,Feature Request,Medium,0,2,Closed
+ACC-0078,Feature Request,Medium,0,0,Closed
+ACC-0079,Billing,Critical,1,9,Closed
+ACC-0079,Technical / Bug,High,1,12,Closed
+ACC-0079,Feature Request,High,1,3,Closed
+ACC-0079,Technical / Bug,Medium,0,0,Closed
+ACC-0079,Billing,Medium,1,21,Closed
+ACC-0079,Feature Request,High,1,49,Closed
+ACC-0079,Technical / Bug,High,1,8,Closed
+ACC-0079,Technical / Bug,High,1,2,Closed
+ACC-0080,Billing,Medium,1,2,Closed
+ACC-0080,Billing,Low,1,0,Working
+ACC-0081,Technical / Bug,Medium,0,4,Closed
+ACC-0081,Feature Request,High,1,1,Closed
+ACC-0081,Billing,High,1,11,Closed
+ACC-0081,Billing,Critical,1,3,Closed
+ACC-0082,Performance / Latency,High,1,3,Closed
+ACC-0082,Technical / Bug,Medium,1,10,Closed
+ACC-0082,Billing,Low,0,0,Closed
+ACC-0082,Performance / Latency,High,1,8,Working
+ACC-0082,Performance / Latency,Medium,1,10,Closed
+ACC-0082,Technical / Bug,Medium,0,1,Closed
+ACC-0082,Feature Request,Medium,0,4,Working
+ACC-0083,Performance / Latency,Low,0,1,Closed
+ACC-0083,Technical / Bug,Low,0,0,Closed
+ACC-0083,Feature Request,Medium,0,7,Closed
+ACC-0084,Technical / Bug,Medium,0,0,Closed
+ACC-0084,Feature Request,Medium,0,13,Working
+ACC-0084,Feature Request,High,1,34,Closed
+ACC-0084,Billing,Critical,1,0,Closed
+ACC-0084,Feature Request,Low,0,3,Closed
+ACC-0084,Technical / Bug,High,1,31,Closed
+ACC-0084,Technical / Bug,High,1,2,Closed
+ACC-0084,Technical / Bug,Medium,0,2,Closed
+ACC-0085,Performance / Latency,Medium,0,0,Closed
+ACC-0085,Billing,High,0,0,Closed
+ACC-0085,Feature Request,Low,0,0,Working
+ACC-0087,Technical / Bug,Low,0,0,Closed
+ACC-0087,Onboarding,Low,0,6,Closed
+ACC-0088,Feature Request,Medium,0,4,Escalated
+ACC-0088,Technical / Bug,Low,0,0,Closed
+ACC-0088,Feature Request,High,0,0,Working
+ACC-0088,Billing,High,1,5,New
+ACC-0088,Technical / Bug,Medium,0,1,Closed
+ACC-0089,Feature Request,Medium,0,6,Working
+ACC-0089,Feature Request,Medium,0,8,Closed
+ACC-0089,Billing,High,0,1,Closed
+ACC-0089,Technical / Bug,Critical,1,11,Working
+ACC-0090,Technical / Bug,High,0,4,Closed
+ACC-0090,Performance / Latency,High,0,1,Escalated
+ACC-0090,Technical / Bug,Medium,1,0,Closed
+ACC-0090,Billing,Medium,1,41,Closed
+ACC-0092,Performance / Latency,Medium,1,37,Closed
+ACC-0092,Performance / Latency,Medium,0,5,Working
+ACC-0092,Billing,Medium,1,19,Closed
+ACC-0094,Feature Request,Low,1,5,Closed
+ACC-0094,Technical / Bug,High,1,13,Closed
+ACC-0094,Technical / Bug,Medium,0,2,Working
+ACC-0095,Feature Request,Low,0,6,Closed
+ACC-0095,Feature Request,Medium,0,6,Closed
+ACC-0095,Feature Request,Medium,0,0,Closed
+ACC-0095,Feature Request,Low,0,5,Working
+ACC-0095,Technical / Bug,Medium,0,0,Working
+ACC-0095,Billing,Medium,0,1,Closed
+ACC-0096,Technical / Bug,Medium,0,2,Closed
+ACC-0096,Technical / Bug,Critical,1,47,Closed
+ACC-0097,Technical / Bug,Critical,1,1,Closed
+ACC-0097,Billing,Medium,0,8,Working
+ACC-0097,Billing,High,1,13,Closed
+ACC-0097,Onboarding,Medium,1,0,Closed
+ACC-0097,Billing,High,1,4,Working
+ACC-0099,Performance / Latency,High,1,6,Closed
+ACC-0099,Performance / Latency,High,0,1,Closed
+ACC-0099,Technical / Bug,Low,0,0,Closed
+ACC-0100,Billing,Medium,1,1,Closed
+ACC-0100,Billing,Medium,1,6,Closed
+ACC-0100,Billing,Low,0,8,Closed
+ACC-0102,Technical / Bug,High,0,4,Closed
+ACC-0102,Performance / Latency,Low,0,4,Closed
+ACC-0102,Performance / Latency,Medium,0,5,Closed
+ACC-0103,Performance / Latency,Medium,0,3,Closed
+ACC-0106,Technical / Bug,Medium,0,0,Closed
+ACC-0106,Technical / Bug,Low,0,12,Closed
+ACC-0106,Billing,Medium,0,0,Closed
+ACC-0106,Performance / Latency,Medium,0,2,Working
+ACC-0107,Billing,Medium,1,1,Closed
+ACC-0107,Feature Request,Critical,1,10,Escalated
+ACC-0108,Billing,Medium,0,3,Closed
+ACC-0109,Feature Request,High,0,2,Closed
+ACC-0109,Performance / Latency,Low,1,20,Closed
+ACC-0109,Technical / Bug,Medium,0,1,Closed
+ACC-0110,Billing,Critical,1,2,Closed
+ACC-0111,Technical / Bug,High,1,0,Closed
+ACC-0111,Feature Request,High,0,0,New
+ACC-0111,Billing,High,1,3,Closed
+ACC-0111,Technical / Bug,Medium,1,7,Closed
+ACC-0111,Billing,High,1,24,Closed
+ACC-0111,Performance / Latency,Medium,1,15,Closed
+ACC-0111,Billing,Medium,0,4,Closed
+ACC-0111,Technical / Bug,Low,1,6,Escalated
+ACC-0111,Technical / Bug,Low,0,1,Closed
+ACC-0112,Feature Request,Low,0,1,Closed
+ACC-0112,Billing,Medium,0,0,Closed
+ACC-0112,Billing,High,1,10,Closed
+ACC-0113,Technical / Bug,Medium,0,10,Closed
+ACC-0114,Performance / Latency,Low,0,1,Closed
+ACC-0114,Technical / Bug,Medium,1,41,Closed
+ACC-0114,Technical / Bug,Medium,0,0,Closed
+ACC-0114,Billing,Low,0,3,New
+ACC-0114,Feature Request,Medium,1,4,Working
+ACC-0116,Technical / Bug,Medium,0,3,Closed
+ACC-0117,Onboarding,Low,0,0,Closed
+ACC-0117,Technical / Bug,Medium,0,0,Working
+ACC-0117,Technical / Bug,Low,0,2,Closed
+ACC-0117,Feature Request,High,1,33,Closed
+ACC-0117,Technical / Bug,High,1,0,Closed
+ACC-0118,Billing,Medium,0,12,Closed
+ACC-0118,Billing,Medium,0,10,Closed
+ACC-0119,Technical / Bug,Critical,1,4,Closed
+ACC-0120,Technical / Bug,Medium,0,1,Closed
+ACC-0121,Technical / Bug,Medium,0,3,Closed
+ACC-0121,Billing,Low,0,3,Escalated
+ACC-0121,Feature Request,Low,0,0,Working
+ACC-0122,Feature Request,Low,0,1,Escalated
+ACC-0122,Technical / Bug,Low,0,6,Closed
+ACC-0122,Technical / Bug,Low,0,4,New
+ACC-0123,Technical / Bug,High,0,1,Closed
+ACC-0123,Feature Request,Low,0,5,Closed
+ACC-0124,Onboarding,Critical,1,14,Working
+ACC-0126,Technical / Bug,Low,0,1,Closed
+ACC-0126,Billing,Medium,0,1,Working
+ACC-0126,Technical / Bug,Low,0,1,Closed
+ACC-0127,Performance / Latency,High,0,3,Closed
+ACC-0127,Billing,Low,0,6,Closed
+ACC-0127,Billing,Medium,1,3,Closed
+ACC-0128,Technical / Bug,Low,0,1,Closed
+ACC-0129,Performance / Latency,Medium,0,0,Closed
+ACC-0129,Onboarding,Medium,0,2,Closed
+ACC-0129,Billing,Medium,0,3,Closed
+ACC-0130,Performance / Latency,Medium,0,0,Closed
+ACC-0130,Feature Request,Medium,0,3,Closed
+ACC-0131,Technical / Bug,Low,0,5,Escalated
+ACC-0132,Billing,High,0,1,Closed
+ACC-0133,Feature Request,Low,1,12,Closed
+ACC-0133,Billing,Low,1,11,Closed
+ACC-0133,Feature Request,Low,0,2,Escalated
+ACC-0133,Onboarding,Low,0,0,Closed
+ACC-0134,Performance / Latency,Medium,0,0,Closed
+ACC-0134,Feature Request,Medium,0,0,Closed
+ACC-0134,Technical / Bug,Medium,0,3,Working
+ACC-0134,Technical / Bug,Low,1,10,Closed
+ACC-0134,Feature Request,Medium,0,0,Working
+ACC-0134,Technical / Bug,Low,0,0,Escalated
+ACC-0135,Performance / Latency,Medium,1,3,Closed
+ACC-0136,Billing,High,1,0,Closed
+ACC-0136,Feature Request,Low,0,2,New
+ACC-0136,Billing,Medium,0,9,Closed
+ACC-0136,Feature Request,Low,0,0,Escalated
+ACC-0136,Onboarding,Medium,0,3,Closed
+ACC-0136,Technical / Bug,Medium,0,0,Closed
+ACC-0136,Feature Request,Low,0,2,Closed
+ACC-0137,Technical / Bug,Medium,0,7,Closed
+ACC-0137,Technical / Bug,Low,0,2,Closed
+ACC-0137,Billing,Medium,0,5,Closed
+ACC-0137,Technical / Bug,Medium,0,2,Closed
+ACC-0140,Technical / Bug,Medium,0,7,New
+ACC-0140,Billing,High,0,2,Closed
+ACC-0141,Performance / Latency,Medium,0,3,Closed
+ACC-0141,Technical / Bug,Medium,1,5,Closed
+ACC-0143,Performance / Latency,Low,0,0,Closed
+ACC-0143,Technical / Bug,Low,0,0,Closed
+ACC-0143,Billing,Low,0,9,Closed
+ACC-0144,Technical / Bug,Medium,0,3,Closed
+ACC-0144,Feature Request,High,0,0,Closed
+ACC-0145,Performance / Latency,Low,1,1,Closed
+ACC-0145,Technical / Bug,Medium,1,4,Closed
+ACC-0145,Technical / Bug,High,1,1,Escalated
+ACC-0145,Performance / Latency,Low,0,3,Closed
+ACC-0146,Onboarding,Critical,1,7,Closed
+ACC-0146,Performance / Latency,Low,0,0,Closed
+ACC-0146,Billing,High,1,5,Working
+ACC-0146,Billing,Medium,1,6,Closed
+ACC-0146,Technical / Bug,Low,0,5,Closed
+ACC-0146,Performance / Latency,High,0,3,Working
+ACC-0148,Feature Request,High,0,0,Closed
+ACC-0148,Technical / Bug,Medium,1,4,Escalated
+ACC-0148,Performance / Latency,Low,0,4,Closed
+ACC-0148,Performance / Latency,Medium,0,1,Closed
+ACC-0149,Feature Request,Low,1,22,Closed
+ACC-0149,Billing,Medium,0,0,Escalated
+ACC-0149,Billing,Low,0,6,New
+ACC-0149,Feature Request,High,0,1,Closed
+ACC-0150,Onboarding,Medium,0,0,Closed
+ACC-0150,Technical / Bug,Medium,0,4,Closed
+ACC-0153,Billing,Medium,1,41,Closed
+ACC-0153,Performance / Latency,High,1,4,Closed
+ACC-0154,Technical / Bug,Medium,1,17,Closed
+ACC-0155,Feature Request,Medium,0,1,New
+ACC-0155,Billing,Medium,0,1,Closed
+ACC-0155,Billing,Medium,1,11,Closed
+ACC-0155,Billing,High,1,34,Closed
+ACC-0155,Performance / Latency,Medium,0,0,Closed
+ACC-0155,Technical / Bug,Low,1,1,Closed
+ACC-0156,Performance / Latency,Medium,0,1,Closed
+ACC-0156,Feature Request,Medium,0,5,Closed
+ACC-0156,Technical / Bug,Medium,0,3,Closed
+ACC-0156,Onboarding,Medium,0,4,Closed
+ACC-0156,Feature Request,High,0,3,Closed
+ACC-0157,Feature Request,Low,0,2,Working
+ACC-0157,Performance / Latency,Critical,1,14,Working
+ACC-0157,Feature Request,Medium,1,24,Closed
+ACC-0157,Billing,Medium,1,12,Closed
+ACC-0157,Technical / Bug,Medium,0,4,Escalated
+ACC-0157,Performance / Latency,Low,1,2,New
+ACC-0157,Feature Request,Medium,0,1,Escalated
+ACC-0157,Billing,High,1,0,Closed
+ACC-0158,Technical / Bug,High,0,2,Closed
+ACC-0158,Billing,High,1,2,Closed
+ACC-0159,Feature Request,Medium,0,16,Closed
+ACC-0160,Billing,Medium,0,1,Closed
+ACC-0160,Billing,Medium,0,4,Closed
+ACC-0160,Billing,Medium,0,0,Closed
+ACC-0160,Billing,Low,0,2,Closed
+ACC-0160,Billing,High,0,1,Working
+ACC-0161,Onboarding,High,1,4,Closed
+ACC-0161,Technical / Bug,Low,1,18,Closed
+ACC-0161,Billing,Medium,0,3,Working
+ACC-0161,Billing,High,0,4,Closed
+ACC-0161,Billing,Low,0,2,Closed
+ACC-0161,Technical / Bug,Critical,1,6,Closed
+ACC-0163,Feature Request,Medium,0,5,Closed
+ACC-0163,Billing,Medium,0,1,Closed
+ACC-0165,Onboarding,Low,0,6,Closed
+ACC-0165,Technical / Bug,High,0,5,Closed
+ACC-0167,Technical / Bug,Medium,0,3,Closed
+ACC-0167,Billing,Low,0,9,Closed
+ACC-0167,Feature Request,Medium,0,0,Working
+ACC-0168,Feature Request,Medium,0,0,Working
+ACC-0168,Billing,Medium,0,0,New
+ACC-0168,Billing,Medium,0,7,Closed
+ACC-0168,Onboarding,Medium,1,1,Working
+ACC-0168,Technical / Bug,Medium,0,2,Closed
+ACC-0169,Feature Request,High,0,0,Working
+ACC-0169,Feature Request,Medium,0,1,Closed
+ACC-0169,Onboarding,Medium,0,0,New
+ACC-0170,Onboarding,High,0,0,Closed
+ACC-0170,Performance / Latency,Medium,0,0,Working
+ACC-0171,Technical / Bug,Medium,0,3,Escalated
+ACC-0172,Performance / Latency,Medium,0,5,Closed
+ACC-0173,Billing,Low,0,0,Closed
+ACC-0173,Billing,Critical,1,18,Closed
+ACC-0173,Technical / Bug,Medium,0,0,Closed
+ACC-0173,Feature Request,Low,1,3,Working
+ACC-0174,Technical / Bug,Medium,0,1,New
+ACC-0174,Performance / Latency,Medium,0,7,Escalated
+ACC-0174,Performance / Latency,Medium,1,9,Closed
+ACC-0174,Feature Request,Low,0,2,Closed
+ACC-0174,Feature Request,Medium,0,0,Closed
+ACC-0174,Billing,Low,1,12,Closed
+ACC-0174,Technical / Bug,Low,1,20,Closed
+ACC-0175,Technical / Bug,Low,0,4,Closed
+ACC-0175,Performance / Latency,High,1,4,Working
+ACC-0175,Billing,Low,0,5,Closed
+ACC-0175,Billing,Medium,0,7,Working
+ACC-0175,Technical / Bug,High,1,3,Closed
+ACC-0175,Performance / Latency,Medium,1,49,Working
+ACC-0175,Technical / Bug,Critical,1,1,Closed
+ACC-0175,Billing,Low,1,2,Closed
+ACC-0176,Performance / Latency,Medium,0,0,Closed
+ACC-0176,Feature Request,Low,0,6,Closed
+ACC-0176,Performance / Latency,Medium,0,1,Closed
+ACC-0176,Technical / Bug,Medium,0,0,New
+ACC-0176,Onboarding,Low,0,0,Escalated
+ACC-0176,Feature Request,Medium,0,2,Working
+ACC-0177,Billing,High,1,20,Closed
+ACC-0177,Technical / Bug,Medium,0,2,Working
+ACC-0178,Billing,Low,0,5,Working
+ACC-0178,Technical / Bug,High,1,1,Working
+ACC-0178,Feature Request,High,1,3,Working
+ACC-0178,Performance / Latency,Low,1,1,Closed
+ACC-0179,Feature Request,Low,0,11,Closed
+ACC-0179,Billing,Medium,0,3,Closed
+ACC-0179,Performance / Latency,Medium,0,0,Working
+ACC-0180,Technical / Bug,Critical,1,4,Closed
+ACC-0180,Technical / Bug,Low,0,3,Escalated
+ACC-0180,Billing,High,1,33,Escalated
+ACC-0180,Feature Request,High,1,24,Closed
+ACC-0180,Performance / Latency,Low,1,17,Closed
+ACC-0180,Performance / Latency,Critical,1,18,Closed
+ACC-0181,Technical / Bug,Medium,0,1,Closed
+ACC-0183,Billing,High,1,16,Closed
+ACC-0183,Billing,Medium,0,4,Closed
+ACC-0184,Feature Request,Medium,0,0,Closed
+ACC-0184,Performance / Latency,High,1,7,Closed
+ACC-0184,Feature Request,Medium,1,4,Working
+ACC-0185,Technical / Bug,High,0,5,Closed
+ACC-0187,Feature Request,Medium,0,7,Closed
+ACC-0187,Technical / Bug,Low,0,3,Closed
+ACC-0187,Billing,Critical,1,21,Escalated
+ACC-0188,Performance / Latency,High,1,1,Closed
+ACC-0188,Billing,Medium,1,5,Closed
+ACC-0188,Technical / Bug,Medium,0,2,Closed
+ACC-0188,Performance / Latency,Critical,1,12,Closed
+ACC-0188,Feature Request,Low,0,9,Escalated
+ACC-0188,Billing,High,0,2,Closed
+ACC-0188,Billing,Critical,1,16,Closed
+ACC-0188,Onboarding,Medium,0,2,Closed
+ACC-0188,Billing,High,1,12,Closed
+ACC-0189,Feature Request,Low,0,10,Closed
+ACC-0189,Performance / Latency,Critical,1,4,Closed
+ACC-0190,Technical / Bug,High,1,2,Closed
+ACC-0191,Feature Request,Medium,1,1,Closed
+ACC-0191,Billing,Low,0,1,Closed
+ACC-0191,Billing,High,1,8,Closed
+ACC-0191,Billing,Medium,1,24,Closed
+ACC-0191,Performance / Latency,Medium,0,2,Working
+ACC-0191,Feature Request,Medium,0,3,Closed
+ACC-0192,Technical / Bug,Medium,1,37,Closed
+ACC-0192,Performance / Latency,Low,0,5,New
+ACC-0193,Billing,Low,0,3,Working
+ACC-0194,Technical / Bug,High,0,1,Closed
+ACC-0194,Feature Request,Medium,0,8,Escalated
+ACC-0195,Technical / Bug,High,0,7,Closed
+ACC-0196,Technical / Bug,High,1,4,Closed
+ACC-0197,Performance / Latency,Low,0,1,Closed
+ACC-0197,Feature Request,Medium,1,13,Closed
+ACC-0197,Technical / Bug,High,1,3,Closed
+ACC-0197,Technical / Bug,Medium,1,4,New
+ACC-0197,Feature Request,High,1,18,Closed
+ACC-0198,Onboarding,Low,0,3,Closed
+ACC-0199,Billing,High,1,12,Closed
+ACC-0199,Performance / Latency,Medium,0,3,Closed
+ACC-0199,Billing,Medium,0,1,Closed
+ACC-0199,Billing,Medium,0,0,Closed
+ACC-0201,Billing,Medium,1,39,Closed
+ACC-0202,Technical / Bug,Medium,0,6,Closed
+ACC-0202,Performance / Latency,Medium,0,0,Working
+ACC-0203,Billing,Critical,1,4,Closed
+ACC-0203,Billing,High,1,9,Closed
+ACC-0203,Performance / Latency,High,1,2,Closed
+ACC-0203,Technical / Bug,Critical,1,9,Closed
+ACC-0203,Performance / Latency,Medium,1,9,Closed
+ACC-0204,Feature Request,Low,0,0,Closed
+ACC-0205,Technical / Bug,Medium,1,61,Closed
+ACC-0205,Technical / Bug,Low,1,25,Closed
+ACC-0205,Billing,Critical,1,11,Closed
+ACC-0205,Technical / Bug,Medium,0,2,Closed
+ACC-0206,Billing,High,1,1,Closed
+ACC-0206,Performance / Latency,Low,0,4,Closed
+ACC-0206,Billing,High,0,0,Closed
+ACC-0206,Feature Request,Low,1,25,Closed
+ACC-0206,Technical / Bug,Medium,0,8,Escalated
+ACC-0206,Technical / Bug,Medium,1,1,Closed
+ACC-0206,Performance / Latency,High,1,7,Closed
+ACC-0207,Billing,High,0,4,Working
+ACC-0207,Billing,Critical,1,5,Closed
+ACC-0208,Performance / Latency,High,1,6,Closed
+ACC-0208,Performance / Latency,High,0,5,Closed
+ACC-0208,Feature Request,Medium,0,6,Closed
+ACC-0208,Billing,Medium,0,0,New
+ACC-0209,Performance / Latency,High,0,3,Closed
+ACC-0209,Feature Request,Medium,0,3,Closed
+ACC-0210,Billing,Medium,0,3,Closed
+ACC-0210,Feature Request,High,0,5,Closed
+ACC-0210,Performance / Latency,Low,0,1,Closed
+ACC-0211,Feature Request,Medium,0,4,Closed
+ACC-0212,Feature Request,High,0,1,Working
+ACC-0213,Billing,High,0,2,Closed
+ACC-0213,Billing,High,0,1,Closed
+ACC-0214,Performance / Latency,Medium,0,0,Closed
+ACC-0214,Billing,High,1,19,Closed
+ACC-0215,Performance / Latency,Medium,0,0,Closed
+ACC-0215,Technical / Bug,High,1,26,New
+ACC-0215,Performance / Latency,Medium,0,2,Closed
+ACC-0215,Technical / Bug,High,1,7,Working
+ACC-0215,Billing,Medium,0,2,Closed
+ACC-0215,Billing,Critical,1,11,Closed
+ACC-0216,Billing,High,1,3,Closed
+ACC-0216,Technical / Bug,Critical,1,8,New
+ACC-0216,Performance / Latency,Medium,0,1,Closed
+ACC-0217,Billing,High,1,0,New
+ACC-0217,Feature Request,High,1,3,Closed
+ACC-0219,Technical / Bug,High,1,8,Closed
+ACC-0219,Billing,Low,0,1,Closed
+ACC-0219,Feature Request,Medium,0,3,Closed
+ACC-0219,Performance / Latency,High,0,3,Closed
+ACC-0219,Billing,Medium,1,0,Working
+ACC-0219,Feature Request,High,1,2,Closed
+ACC-0221,Performance / Latency,High,0,0,Closed
+ACC-0221,Performance / Latency,Critical,1,17,Closed
+ACC-0221,Performance / Latency,Medium,1,6,Closed
+ACC-0221,Performance / Latency,Medium,1,20,Closed
+ACC-0221,Technical / Bug,Medium,0,5,Closed
+ACC-0222,Technical / Bug,High,1,1,Closed
+ACC-0223,Billing,Medium,0,1,Closed
+ACC-0223,Onboarding,Low,1,5,Closed
+ACC-0223,Technical / Bug,Medium,1,0,Working
+ACC-0225,Technical / Bug,Critical,1,39,Closed
+ACC-0225,Billing,Medium,0,2,Closed
+ACC-0226,Performance / Latency,Medium,0,4,Closed
+ACC-0226,Feature Request,High,1,1,Closed
+ACC-0228,Billing,Critical,1,3,Closed
+ACC-0228,Billing,Medium,1,3,Closed
+ACC-0229,Technical / Bug,High,1,3,Closed
+ACC-0229,Feature Request,Critical,1,2,Closed
+ACC-0229,Technical / Bug,High,1,1,Closed
+ACC-0229,Technical / Bug,High,0,2,New
+ACC-0229,Technical / Bug,Medium,1,18,Closed
+ACC-0229,Performance / Latency,Medium,0,2,Closed
+ACC-0229,Billing,Medium,1,1,Closed
+ACC-0230,Feature Request,Medium,0,0,Closed
+ACC-0230,Onboarding,Low,1,11,Working
+ACC-0230,Performance / Latency,Medium,0,1,Closed
+ACC-0230,Technical / Bug,Critical,1,1,Escalated
+ACC-0230,Billing,High,1,38,Closed
+ACC-0230,Performance / Latency,Low,0,2,Working
+ACC-0231,Technical / Bug,Medium,0,1,Closed
+ACC-0231,Technical / Bug,Low,0,0,Closed
+ACC-0231,Feature Request,High,0,0,Closed
+ACC-0232,Technical / Bug,Low,1,10,Closed
+ACC-0232,Performance / Latency,Low,0,0,Escalated
+ACC-0232,Billing,Low,1,11,Closed
+ACC-0232,Billing,Medium,0,11,Working
+ACC-0232,Technical / Bug,High,0,0,Closed
+ACC-0232,Billing,Medium,0,4,Closed
+ACC-0232,Feature Request,Medium,1,28,Closed
+ACC-0232,Technical / Bug,Medium,0,8,New
+ACC-0233,Technical / Bug,Low,0,3,Working
+ACC-0234,Billing,Medium,0,1,Closed
+ACC-0234,Technical / Bug,Medium,0,7,Escalated
+ACC-0235,Billing,Low,0,0,Closed
+ACC-0235,Performance / Latency,High,0,1,Closed
+ACC-0235,Performance / Latency,Medium,0,3,Closed
+ACC-0236,Technical / Bug,Medium,0,4,Working
+ACC-0236,Technical / Bug,Low,0,0,Closed
+ACC-0236,Billing,Medium,0,2,Working
+ACC-0237,Billing,High,1,0,Working
+ACC-0237,Billing,Low,0,0,Escalated
+ACC-0237,Technical / Bug,Medium,0,0,Working
+ACC-0238,Feature Request,Medium,0,6,Closed
+ACC-0238,Onboarding,Medium,0,8,Closed
+ACC-0238,Billing,High,0,6,Closed
+ACC-0239,Billing,Medium,0,0,Escalated
+ACC-0241,Technical / Bug,High,1,9,Working
+ACC-0241,Feature Request,High,1,3,Escalated
+ACC-0243,Feature Request,Medium,0,10,Closed
+ACC-0245,Billing,Medium,1,14,Closed
+ACC-0245,Billing,High,1,2,New
+ACC-0245,Feature Request,Low,1,18,Working
+ACC-0245,Billing,Medium,0,2,Closed
+ACC-0245,Technical / Bug,Medium,0,9,Closed
+ACC-0245,Technical / Bug,High,1,0,Working
+ACC-0245,Feature Request,Low,0,0,Closed
+ACC-0245,Technical / Bug,Medium,0,2,New
+ACC-0246,Feature Request,High,0,5,Escalated
+ACC-0247,Feature Request,High,1,46,New
+ACC-0247,Billing,Medium,0,5,Closed
+ACC-0247,Billing,Medium,1,14,Closed
+ACC-0247,Performance / Latency,High,1,15,Escalated
+ACC-0247,Billing,Medium,0,2,Working
+ACC-0247,Technical / Bug,Medium,0,8,Working
+ACC-0247,Technical / Bug,High,1,8,Closed
+ACC-0248,Technical / Bug,Medium,1,42,Escalated
+ACC-0248,Feature Request,Medium,1,6,New
+ACC-0249,Onboarding,High,1,15,Closed
+ACC-0249,Onboarding,Medium,0,5,New
+ACC-0250,Technical / Bug,High,0,1,Closed
+ACC-0251,Technical / Bug,High,0,7,Closed
+ACC-0251,Onboarding,Low,0,0,Closed
+ACC-0252,Performance / Latency,Medium,0,1,Working
+ACC-0252,Billing,Low,0,0,Working
+ACC-0253,Feature Request,Low,0,1,Closed
+ACC-0254,Technical / Bug,Low,1,6,Working
+ACC-0254,Billing,Low,0,11,Working
+ACC-0254,Technical / Bug,Low,0,0,Closed
+ACC-0255,Technical / Bug,Medium,0,1,Closed
+ACC-0255,Billing,High,1,3,Closed
+ACC-0255,Onboarding,High,1,4,Escalated
+ACC-0255,Feature Request,Medium,0,3,Escalated
+ACC-0255,Technical / Bug,Low,0,10,Closed
+ACC-0256,Billing,Medium,0,10,Closed
+ACC-0256,Performance / Latency,Low,0,0,Closed
+ACC-0256,Technical / Bug,Medium,1,13,Closed
+ACC-0256,Technical / Bug,High,1,14,New
+ACC-0257,Billing,High,1,16,Closed
+ACC-0257,Technical / Bug,Medium,0,6,Closed
+ACC-0257,Feature Request,Medium,0,0,Closed
+ACC-0257,Feature Request,Medium,0,2,Closed
+ACC-0258,Feature Request,Medium,0,11,Closed
+ACC-0258,Technical / Bug,Medium,0,0,Closed
+ACC-0258,Technical / Bug,Medium,0,0,Closed
+ACC-0258,Technical / Bug,Medium,1,6,Working
+ACC-0258,Performance / Latency,High,1,1,Closed
+ACC-0259,Technical / Bug,Low,0,2,Closed
+ACC-0259,Billing,Medium,0,3,Closed
+ACC-0259,Billing,Critical,1,3,Closed
+ACC-0260,Technical / Bug,Medium,1,3,New
+ACC-0261,Technical / Bug,High,0,2,Closed
+ACC-0261,Feature Request,Low,0,4,Working
+ACC-0261,Billing,Medium,1,16,Closed
+ACC-0261,Technical / Bug,Medium,0,2,Escalated
+ACC-0261,Performance / Latency,High,1,0,Closed
+ACC-0261,Onboarding,Low,0,1,Working
+ACC-0261,Technical / Bug,Medium,0,7,Closed
+ACC-0261,Technical / Bug,Low,0,2,Closed
+ACC-0261,Onboarding,High,1,9,Working
+ACC-0262,Performance / Latency,Medium,1,33,Closed
+ACC-0262,Billing,Medium,1,0,Closed
+ACC-0262,Performance / Latency,Medium,0,5,Closed
+ACC-0262,Billing,Medium,0,1,Closed
+ACC-0262,Technical / Bug,Medium,1,7,Closed
+ACC-0264,Technical / Bug,Critical,1,13,Closed
+ACC-0267,Feature Request,High,1,9,Closed
+ACC-0267,Billing,Medium,1,8,Closed
+ACC-0267,Performance / Latency,Medium,0,0,Closed
+ACC-0267,Billing,Medium,0,5,Closed
+ACC-0267,Feature Request,Low,0,3,Closed
+ACC-0267,Billing,High,0,5,Escalated
+ACC-0268,Technical / Bug,Critical,1,0,Working
+ACC-0268,Technical / Bug,Medium,0,3,Working
+ACC-0268,Feature Request,Medium,1,15,Closed
+ACC-0268,Billing,Low,0,2,Escalated
+ACC-0270,Feature Request,Medium,0,2,Closed
+ACC-0271,Feature Request,Medium,0,2,New
+ACC-0271,Technical / Bug,Medium,0,2,Closed
+ACC-0271,Technical / Bug,Medium,0,0,New
+ACC-0271,Feature Request,Medium,0,2,Closed
+ACC-0271,Performance / Latency,Low,0,0,Working
+ACC-0272,Performance / Latency,Medium,0,0,Closed
+ACC-0272,Technical / Bug,High,0,4,Working
+ACC-0273,Technical / Bug,Medium,0,2,Escalated
+ACC-0273,Technical / Bug,Low,0,5,New
+ACC-0273,Billing,Low,0,5,Closed
+ACC-0274,Billing,Medium,0,4,Closed
+ACC-0274,Technical / Bug,Medium,0,6,Closed
+ACC-0274,Onboarding,Medium,1,2,Closed
+ACC-0274,Feature Request,Medium,1,0,Closed
+ACC-0275,Onboarding,High,0,0,Closed
+ACC-0277,Feature Request,Low,0,0,Closed
+ACC-0277,Technical / Bug,Medium,0,3,Closed
+ACC-0278,Billing,Medium,0,3,Escalated
+ACC-0278,Performance / Latency,Low,0,2,Closed
+ACC-0278,Feature Request,High,1,16,Working
+ACC-0278,Technical / Bug,High,1,2,Working
+ACC-0278,Billing,Medium,1,2,Working
+ACC-0278,Billing,Low,0,6,Closed
+ACC-0279,Performance / Latency,High,1,10,Closed
+ACC-0280,Performance / Latency,Medium,0,0,Closed
+ACC-0281,Onboarding,Medium,0,1,Closed
+ACC-0282,Feature Request,Medium,0,0,Closed
+ACC-0282,Feature Request,High,0,3,Closed
+ACC-0282,Technical / Bug,Medium,0,0,Closed
+ACC-0283,Feature Request,Medium,1,5,Closed
+ACC-0283,Performance / Latency,Medium,1,6,Closed
+ACC-0283,Onboarding,Medium,1,0,Closed
+ACC-0283,Technical / Bug,Medium,0,0,Closed
+ACC-0284,Billing,Medium,1,66,Closed
+ACC-0284,Technical / Bug,Medium,1,20,New
+ACC-0287,Billing,Medium,1,11,Working
+ACC-0287,Billing,Low,0,4,Closed
+ACC-0287,Technical / Bug,Medium,0,0,Closed
+ACC-0288,Feature Request,Low,0,1,Closed
+ACC-0288,Feature Request,Medium,0,0,Closed
+ACC-0288,Feature Request,High,0,2,Escalated
+ACC-0288,Feature Request,Medium,0,7,Closed
+ACC-0289,Billing,Medium,1,13,Closed
+ACC-0289,Billing,Critical,1,13,Closed
+ACC-0289,Technical / Bug,Medium,0,1,Closed
+ACC-0289,Billing,Medium,0,8,Escalated
+ACC-0289,Feature Request,Medium,1,2,Closed
+ACC-0289,Billing,Medium,0,2,Closed
+ACC-0289,Technical / Bug,Low,0,3,Closed
+ACC-0290,Billing,Medium,0,4,Closed
+ACC-0290,Technical / Bug,Low,1,11,Closed
+ACC-0290,Performance / Latency,Medium,0,3,Escalated
+ACC-0290,Performance / Latency,Low,0,5,Escalated
+ACC-0290,Technical / Bug,Medium,0,4,Working
+ACC-0290,Performance / Latency,High,1,38,Closed
+ACC-0291,Billing,Medium,1,0,Closed
+ACC-0291,Technical / Bug,Low,0,0,Closed
+ACC-0291,Technical / Bug,Medium,0,1,Working
+ACC-0291,Billing,Medium,0,0,Closed
+ACC-0291,Feature Request,Low,0,2,Escalated
+ACC-0292,Technical / Bug,Low,0,2,Closed
+ACC-0292,Technical / Bug,High,0,10,Working
+ACC-0292,Feature Request,Medium,0,1,Working
+ACC-0292,Technical / Bug,Low,0,5,Closed
+ACC-0293,Technical / Bug,Low,1,0,Closed
+ACC-0293,Technical / Bug,Low,0,0,Working
+ACC-0293,Feature Request,Low,0,0,Closed
+ACC-0293,Technical / Bug,Medium,0,1,New
+ACC-0294,Billing,Medium,0,0,Closed
+ACC-0295,Billing,Low,0,4,Working
+ACC-0296,Feature Request,High,1,3,Closed
+ACC-0296,Technical / Bug,High,0,2,Closed
+ACC-0296,Feature Request,Medium,0,0,Closed
+ACC-0296,Technical / Bug,Medium,1,7,Closed
+ACC-0296,Feature Request,Low,0,1,Closed
+ACC-0297,Billing,Medium,0,0,Closed
+ACC-0297,Feature Request,High,1,8,Closed
+ACC-0297,Technical / Bug,Medium,0,4,New
+ACC-0297,Feature Request,Medium,1,8,Closed
+ACC-0297,Technical / Bug,High,1,7,Closed
+ACC-0297,Technical / Bug,Medium,0,5,Escalated
+ACC-0297,Feature Request,Medium,1,5,Working
+ACC-0297,Billing,High,1,23,Closed
+ACC-0297,Technical / Bug,Medium,0,1,Closed
+ACC-0297,Billing,High,0,1,Closed
+ACC-0298,Performance / Latency,Medium,0,1,Working
+ACC-0298,Feature Request,High,0,3,Closed
+ACC-0298,Technical / Bug,Medium,0,0,Closed
+ACC-0299,Technical / Bug,Medium,0,1,Closed
+ACC-0300,Performance / Latency,Low,1,2,Closed
+ACC-0300,Billing,High,1,2,Closed
+ACC-0300,Technical / Bug,Medium,0,6,Closed
+ACC-0300,Billing,Low,0,0,Escalated

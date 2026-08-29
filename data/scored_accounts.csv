@@ -1,0 +1,301 @@
+Account_Ref,Name,Industry,Tenure_Months,Monthly_Charges,Total_Charges,Contract_Type,True_Churn_Label,Num_Cases,Total_Cases,Escalated_Cases,Avg_Days_To_Resolve,Critical_Cases,High_Cases,Escalation_Rate,Avg_Monthly_Case_Load,Est_Annual_Value,Predicted_Churn_Prob,Predicted_Risk_Level,Top_Churn_Driver
+ACC-0001,Vertex Analytics 1,Education,24,2389.39,53976.57,Month-to-Month,0,1,1,0,2.0,0,1,0.0,0.042,28672.68,0.25,Low,Elevated Contract Type One Year
+ACC-0002,Cloud Analytics 2,Technology,22,2124.42,42720.37,Month-to-Month,1,2,2,1,2.5,0,0,0.5,0.091,25493.04,0.88,High,Elevated Escalation Rate
+ACC-0003,Nova Ventures 3,Finance,8,2751.4,20727.52,Month-to-Month,1,4,4,2,5.0,0,0,0.5,0.5,33016.8,0.99,High,Elevated Escalated Cases
+ACC-0004,Vertex Analytics 4,Education,3,2019.49,5659.73,Month-to-Month,1,4,4,2,4.75,0,0,0.5,1.333,24233.88,1.0,High,Elevated Escalated Cases
+ACC-0005,Stratum Logistics 5,Education,6,2657.49,15126.05,One Year,1,3,3,0,2.0,0,2,0.0,0.5,31889.88,0.76,High,Elevated Tenure Months
+ACC-0006,Nova Software 6,Healthcare,30,2774.89,78001.67,One Year,0,0,0,0,0.0,0,0,0.0,0.0,33298.68,0.21,Low,Elevated Industry Healthcare
+ACC-0007,Quantum Labs 7,Manufacturing,11,2989.34,34022.9,Month-to-Month,1,4,4,2,1.75,0,2,0.5,0.364,35872.08,0.99,High,Elevated Escalated Cases
+ACC-0008,Vertex Media 8,Finance,31,3150.02,99143.68,Month-to-Month,1,7,7,4,3.0,1,2,0.571,0.226,37800.24,0.99,High,Elevated Escalated Cases
+ACC-0009,Nexus Systems 9,Retail,15,2785.69,42406.91,Month-to-Month,0,2,2,0,3.5,0,0,0.0,0.133,33428.28,0.66,Medium,Elevated Contract Type One Year
+ACC-0010,Pulse Software 10,Manufacturing,28,2076.19,60997.69,One Year,1,2,2,0,0.5,0,0,0.0,0.071,24914.28,0.33,Low,Elevated Avg Days To Resolve
+ACC-0011,Vertex Analytics 11,Healthcare,14,1329.19,16935.93,Month-to-Month,1,1,1,0,8.0,0,0,0.0,0.071,15950.28,0.87,High,Elevated Avg Days To Resolve
+ACC-0012,Stratum Health 12,Education,22,4008.95,91753.63,One Year,1,6,6,3,6.83,2,3,0.5,0.273,48107.4,0.99,High,Elevated Escalated Cases
+ACC-0013,Stratum Systems 13,Technology,17,1565.06,26548.07,One Year,0,2,2,1,7.5,0,2,0.5,0.118,18780.72,0.41,Medium,Elevated Escalation Rate
+ACC-0014,Nova Ventures 14,Technology,8,1707.57,14313.48,Month-to-Month,1,3,3,0,1.0,0,0,0.0,0.375,20490.84,0.68,Medium,Elevated Tenure Months
+ACC-0015,Synergy Analytics 15,Technology,9,3739.95,33243.07,One Year,1,6,6,3,8.17,1,2,0.5,0.667,44879.4,0.99,High,Elevated Escalated Cases
+ACC-0016,Vertex Analytics 16,Manufacturing,9,2917.55,26078.71,One Year,1,3,3,1,5.67,0,0,0.333,0.333,35010.6,0.91,High,Elevated Escalation Rate
+ACC-0017,Stratum Analytics 17,Education,22,1928.52,43384.84,Month-to-Month,1,5,5,2,4.6,0,2,0.4,0.227,23142.24,0.99,High,Elevated Escalated Cases
+ACC-0018,Quantum Health 18,Education,7,1788.39,12096.54,One Year,1,5,5,5,5.6,1,1,1.0,0.714,21460.68,0.99,High,Elevated Escalated Cases
+ACC-0019,Beacon Health 19,Healthcare,8,2885.98,23773.34,Two Year,0,4,4,0,2.75,0,1,0.0,0.5,34631.76,0.13,Low,Elevated Contract Type One Year
+ACC-0020,Nexus Tech 20,Finance,28,1792.91,51360.15,Two Year,0,2,2,0,5.0,0,0,0.0,0.071,21514.92,0.05,Low,Elevated Contract Type One Year
+ACC-0021,Stratum Tech 21,Technology,34,3343.04,104263.54,Two Year,0,5,5,1,3.6,1,0,0.2,0.147,40116.48,0.24,Low,Elevated Monthly Charges
+ACC-0022,Vertex Tech 22,Retail,12,2111.71,23999.69,Two Year,0,2,2,0,0.0,0,0,0.0,0.167,25340.52,0.1,Low,Elevated Industry Retail
+ACC-0023,Cloud Health 23,Retail,13,3371.16,43183.73,Month-to-Month,1,3,3,2,8.0,0,2,0.667,0.231,40453.92,1.0,High,Elevated Escalated Cases
+ACC-0024,Vertex Software 24,Retail,19,879.89,16710.86,One Year,0,2,2,0,4.5,0,0,0.0,0.105,10558.68,0.22,Low,Elevated Industry Retail
+ACC-0025,Beacon Systems 25,Manufacturing,24,3192.6,73723.48,One Year,0,2,2,1,18.5,0,1,0.5,0.083,38311.2,0.33,Low,Elevated Escalation Rate
+ACC-0026,Vertex Ventures 26,Healthcare,14,4197.72,54441.75,Two Year,1,4,4,1,2.0,0,2,0.25,0.286,50372.64,0.97,High,Elevated Monthly Charges
+ACC-0027,Nova Solutions 27,Manufacturing,9,2452.38,20722.39,Month-to-Month,1,4,4,1,4.5,0,0,0.25,0.444,29428.56,0.96,High,Elevated Escalated Cases
+ACC-0028,Stratum Solutions 28,Manufacturing,17,2659.25,41108.75,Two Year,0,0,0,0,0.0,0,0,0.0,0.0,31911.0,0.09,Low,Elevated Contract Type One Year
+ACC-0029,Cloud Labs 29,Education,19,3029.7,51976.52,Two Year,1,5,5,0,0.6,0,4,0.0,0.263,36356.4,0.84,High,Elevated High Cases
+ACC-0030,Beacon Media 30,Technology,56,2028.51,117690.5,One Year,0,0,0,0,0.0,0,0,0.0,0.0,24342.12,0.05,Low,Elevated Contract Type Two Year
+ACC-0031,Apex Systems 31,Education,31,2745.84,82081.53,Two Year,1,1,1,1,55.0,0,0,1.0,0.032,32950.08,0.88,High,Elevated Escalation Rate
+ACC-0032,Synergy Ventures 32,Finance,30,3522.13,107016.55,Two Year,1,0,0,0,0.0,0,0,0.0,0.0,42265.56,0.61,Medium,Elevated Monthly Charges
+ACC-0033,Quantum Systems 33,Manufacturing,15,3379.02,45764.14,One Year,1,3,3,2,11.0,0,2,0.667,0.2,40548.24,0.98,High,Elevated Escalated Cases
+ACC-0034,Beacon Logistics 34,Manufacturing,21,2759.33,58231.01,One Year,0,4,4,1,7.25,0,2,0.25,0.19,33111.96,0.25,Low,Elevated High Cases
+ACC-0035,Vertex Software 35,Education,18,1782.2,31760.78,Month-to-Month,0,3,3,0,0.67,0,1,0.0,0.167,21386.4,0.15,Low,Elevated Contract Type One Year
+ACC-0036,Nexus Health 36,Manufacturing,48,2123.17,94413.52,One Year,1,0,0,0,0.0,0,0,0.0,0.0,25478.04,0.17,Low,Elevated Total Charges
+ACC-0037,Quantum Labs 37,Retail,6,1374.03,8377.7,One Year,1,0,0,0,0.0,0,0,0.0,0.0,16488.36,0.81,High,Elevated Tenure Months
+ACC-0038,Beacon Software 38,Finance,39,3186.13,127708.13,Two Year,0,0,0,0,0.0,0,0,0.0,0.0,38233.56,0.1,Low,Elevated Contract Type One Year
+ACC-0039,Vertex Software 39,Manufacturing,18,2269.07,38252.96,One Year,1,3,3,2,14.0,0,1,0.667,0.167,27228.84,0.94,High,Elevated Escalated Cases
+ACC-0040,Pulse Systems 40,Healthcare,29,2679.27,78321.29,One Year,0,0,0,0,0.0,0,0,0.0,0.0,32151.24,0.21,Low,Elevated Industry Healthcare
+ACC-0041,Pulse Solutions 41,Education,18,2898.4,52524.73,Month-to-Month,1,4,4,3,9.5,0,3,0.75,0.222,34780.8,0.99,High,Elevated Escalated Cases
+ACC-0042,Stratum Health 42,Healthcare,50,800.88,37339.34,One Year,0,1,1,0,12.0,0,0,0.0,0.02,9610.56,0.2,Low,Elevated Avg Days To Resolve
+ACC-0043,Vertex Logistics 43,Finance,22,4000.94,82222.1,Month-to-Month,1,9,9,3,6.89,1,0,0.333,0.409,48011.28,0.99,High,Elevated Escalated Cases
+ACC-0044,Quantum Labs 44,Retail,32,1224.46,35618.45,Two Year,0,0,0,0,0.0,0,0,0.0,0.0,14693.52,0.07,Low,Elevated Industry Retail
+ACC-0045,Vertex Logistics 45,Education,18,2537.58,42554.63,One Year,0,0,0,0,0.0,0,0,0.0,0.0,30450.96,0.11,Low,Elevated Contract Type Two Year
+ACC-0046,Nova Logistics 46,Healthcare,5,3069.29,15082.47,Month-to-Month,1,4,4,3,10.5,1,1,0.75,0.8,36831.48,0.99,High,Elevated Escalated Cases
+ACC-0047,Nova Software 47,Healthcare,15,3277.26,44769.57,Month-to-Month,1,2,2,0,1.5,0,0,0.0,0.133,39327.12,0.54,Medium,Elevated Contract Type One Year
+ACC-0048,Stratum Media 48,Manufacturing,30,2284.47,66180.9,One Year,0,1,1,0,2.0,0,0,0.0,0.033,27413.64,0.2,Low,Elevated Contract Type Two Year
+ACC-0049,Pulse Labs 49,Retail,5,2455.56,12801.05,Two Year,1,3,3,1,0.33,0,1,0.333,0.6,29466.72,0.89,High,Elevated Tenure Months
+ACC-0050,Synergy Ventures 50,Finance,23,2088.91,45554.22,Month-to-Month,1,4,4,3,1.25,1,2,0.75,0.174,25066.92,0.99,High,Elevated Escalated Cases
+ACC-0051,Apex Logistics 51,Retail,17,1671.81,27121.0,One Year,1,1,1,0,2.0,0,0,0.0,0.059,20061.72,0.59,Medium,Elevated Industry Retail
+ACC-0052,Quantum Solutions 52,Education,2,2410.14,4688.72,Month-to-Month,1,4,4,2,6.0,0,1,0.5,2.0,28921.68,0.99,High,Elevated Escalated Cases
+ACC-0053,Nexus Solutions 53,Healthcare,26,2749.0,69223.85,Month-to-Month,1,4,4,1,1.25,0,1,0.25,0.154,32988.0,0.84,High,Elevated Contract Type One Year
+ACC-0054,Nexus Media 54,Manufacturing,19,3849.71,69616.63,One Year,1,4,4,0,0.75,0,1,0.0,0.211,46196.52,0.74,High,Elevated Monthly Charges
+ACC-0055,Nexus Analytics 55,Healthcare,31,4027.53,121775.0,One Year,0,1,1,0,0.0,0,0,0.0,0.032,48330.36,0.68,Medium,Elevated Monthly Charges
+ACC-0056,Nexus Analytics 56,Education,19,2026.08,35478.37,Two Year,0,2,2,1,9.0,0,1,0.5,0.105,24312.96,0.27,Low,Elevated Escalation Rate
+ACC-0057,Stratum Ventures 57,Finance,15,1773.95,26450.12,Two Year,0,1,1,0,7.0,0,0,0.0,0.067,21287.4,0.05,Low,Elevated High Cases
+ACC-0058,Quantum Logistics 58,Education,21,1164.48,22340.19,Two Year,0,2,2,1,2.5,0,0,0.5,0.095,13973.76,0.14,Low,Elevated Escalation Rate
+ACC-0059,Synergy Tech 59,Manufacturing,21,1776.55,34391.42,One Year,0,1,1,0,1.0,0,0,0.0,0.048,21318.6,0.17,Low,Elevated Contract Type Two Year
+ACC-0060,Cloud Labs 60,Education,21,3305.03,64972.31,Two Year,0,2,2,0,1.0,0,1,0.0,0.095,39660.36,0.12,Low,Elevated Contract Type One Year
+ACC-0061,Nova Systems 61,Manufacturing,26,2337.56,63316.13,Two Year,0,0,0,0,0.0,0,0,0.0,0.0,28050.72,0.04,Low,Elevated Contract Type One Year
+ACC-0062,Quantum Ventures 62,Education,19,3434.23,61173.18,Two Year,1,3,3,1,8.33,1,1,0.333,0.158,41210.76,0.74,High,Elevated Monthly Charges
+ACC-0063,Apex Labs 63,Education,30,2239.18,65463.04,Two Year,0,0,0,0,0.0,0,0,0.0,0.0,26870.16,0.06,Low,Elevated Contract Type One Year
+ACC-0064,Quantum Logistics 64,Retail,38,2514.73,97498.63,Month-to-Month,1,6,6,3,5.0,0,2,0.5,0.158,30176.76,0.99,High,Elevated Escalated Cases
+ACC-0065,Nexus Software 65,Education,20,2698.58,55620.95,Two Year,0,1,1,1,17.0,0,1,1.0,0.05,32382.96,0.29,Low,Elevated Escalation Rate
+ACC-0066,Cloud Media 66,Finance,10,3330.03,30421.34,Month-to-Month,1,3,3,2,2.33,0,1,0.667,0.3,39960.36,0.99,High,Elevated Escalated Cases
+ACC-0067,Synergy Labs 67,Healthcare,30,3584.51,107228.59,One Year,0,0,0,0,0.0,0,0,0.0,0.0,43014.12,0.47,Medium,Elevated Monthly Charges
+ACC-0068,Nexus Software 68,Education,21,1077.02,21740.87,Month-to-Month,1,6,6,3,12.83,0,3,0.5,0.286,12924.24,0.98,High,Elevated Escalated Cases
+ACC-0069,Synergy Media 69,Education,51,3576.34,173966.96,Month-to-Month,0,5,5,0,2.2,0,1,0.0,0.098,42916.08,0.1,Low,Elevated Contract Type One Year
+ACC-0070,Apex Software 70,Healthcare,19,1690.32,33661.8,One Year,0,2,2,0,2.5,0,1,0.0,0.105,20283.84,0.06,Low,Elevated Contract Type Two Year
+ACC-0071,Quantum Analytics 71,Healthcare,15,1297.49,19681.45,One Year,1,0,0,0,0.0,0,0,0.0,0.0,15569.88,0.57,Medium,Elevated Industry Healthcare
+ACC-0072,Vertex Solutions 72,Manufacturing,6,3979.16,24273.73,One Year,1,1,1,0,9.0,0,1,0.0,0.167,47749.92,0.78,High,Elevated Monthly Charges
+ACC-0073,Stratum Software 73,Manufacturing,15,1614.78,24136.95,Month-to-Month,0,3,3,0,0.0,0,1,0.0,0.2,19377.36,0.06,Low,Elevated Contract Type One Year
+ACC-0074,Synergy Ventures 74,Retail,20,1929.72,37806.44,One Year,0,3,3,1,3.0,0,1,0.333,0.15,23156.64,0.24,Low,Elevated Escalation Rate
+ACC-0075,Cloud Systems 75,Finance,6,1877.75,10861.07,One Year,1,1,1,1,0.0,1,0,1.0,0.167,22533.0,0.95,High,Elevated Tenure Months
+ACC-0076,Vertex Systems 76,Manufacturing,17,3077.34,47841.06,One Year,0,0,0,0,0.0,0,0,0.0,0.0,36928.08,0.06,Low,Elevated Contract Type Two Year
+ACC-0077,Nova Media 77,Technology,12,2891.5,34280.57,One Year,0,3,3,0,1.33,0,0,0.0,0.25,34698.0,0.1,Low,Elevated Avg Monthly Case Load
+ACC-0078,Nexus Logistics 78,Technology,15,2760.91,39447.21,One Year,0,3,3,0,1.0,0,0,0.0,0.2,33130.92,0.06,Low,Elevated Tenure Months
+ACC-0079,Apex Health 79,Finance,7,3903.84,27474.58,Month-to-Month,1,8,8,7,13.0,1,5,0.875,1.143,46846.08,1.0,High,Elevated Escalated Cases
+ACC-0080,Quantum Analytics 80,Healthcare,12,2656.68,30582.3,One Year,1,2,2,2,1.0,0,0,1.0,0.167,31880.16,0.97,High,Elevated Escalated Cases
+ACC-0081,Nova Health 81,Manufacturing,21,3286.15,67621.19,Month-to-Month,1,4,4,3,4.75,1,2,0.75,0.19,39433.8,0.98,High,Elevated Escalated Cases
+ACC-0082,Beacon Solutions 82,Education,25,1761.41,45707.07,Month-to-Month,1,7,7,4,5.14,0,2,0.571,0.28,21136.92,0.98,High,Elevated Escalated Cases
+ACC-0083,Nexus Labs 83,Education,17,3916.64,66269.59,One Year,0,3,3,0,2.67,0,0,0.0,0.176,46999.68,0.48,Medium,Elevated Monthly Charges
+ACC-0084,Quantum Systems 84,Education,14,2440.45,35178.9,Two Year,1,8,8,4,10.62,1,3,0.5,0.571,29285.4,0.97,High,Elevated Escalated Cases
+ACC-0085,Vertex Media 85,Education,8,3342.52,25616.66,Month-to-Month,1,3,3,0,0.0,0,1,0.0,0.375,40110.24,0.78,High,Elevated Monthly Charges
+ACC-0086,Vertex Software 86,Retail,17,3504.6,56986.66,One Year,1,0,0,0,0.0,0,0,0.0,0.0,42055.2,0.6,Medium,Elevated Monthly Charges
+ACC-0087,Nova Media 87,Technology,41,2657.24,108609.51,Month-to-Month,0,2,2,0,3.0,0,0,0.0,0.049,31886.88,0.35,Low,Elevated Contract Type One Year
+ACC-0088,Vertex Software 88,Technology,21,2086.17,42764.86,One Year,1,5,5,1,2.0,0,2,0.2,0.238,25034.04,0.86,High,Elevated High Cases
+ACC-0089,Pulse Software 89,Manufacturing,8,1885.76,15623.09,Month-to-Month,1,4,4,1,6.5,1,1,0.25,0.5,22629.12,0.96,High,Elevated Tenure Months
+ACC-0090,Stratum Systems 90,Finance,7,2633.16,16820.81,Month-to-Month,1,4,4,2,11.5,0,2,0.5,0.571,31597.92,1.0,High,Elevated Escalated Cases
+ACC-0091,Synergy Health 91,Healthcare,41,2043.4,75882.81,Two Year,0,0,0,0,0.0,0,0,0.0,0.0,24520.8,0.09,Low,Elevated Industry Healthcare
+ACC-0092,Nexus Health 92,Education,14,3738.0,50781.22,One Year,1,3,3,2,20.33,0,0,0.667,0.214,44856.0,0.98,High,Elevated Escalated Cases
+ACC-0093,Beacon Solutions 93,Technology,27,4108.16,101672.75,Two Year,1,0,0,0,0.0,0,0,0.0,0.0,49297.92,0.87,High,Elevated Monthly Charges
+ACC-0094,Beacon Media 94,Technology,7,2085.91,14525.34,One Year,1,3,3,2,6.67,0,1,0.667,0.429,25030.92,0.99,High,Elevated Escalated Cases
+ACC-0095,Stratum Media 95,Technology,26,2212.57,55143.37,One Year,0,6,6,0,3.0,0,0,0.0,0.231,26550.84,0.13,Low,Elevated Avg Monthly Case Load
+ACC-0096,Apex Logistics 96,Technology,23,2794.94,60898.4,Month-to-Month,1,2,2,1,24.5,1,0,0.5,0.087,33539.28,0.94,High,Elevated Escalation Rate
+ACC-0097,Synergy Software 97,Technology,6,3097.0,18951.81,Month-to-Month,1,5,5,4,5.2,1,2,0.8,0.833,37164.0,0.99,High,Elevated Escalated Cases
+ACC-0098,Nova Solutions 98,Finance,20,2606.38,50411.01,One Year,0,0,0,0,0.0,0,0,0.0,0.0,31276.56,0.09,Low,Elevated Contract Type Two Year
+ACC-0099,Synergy Labs 99,Manufacturing,12,2801.77,31643.75,Two Year,1,3,3,1,2.33,0,2,0.333,0.25,33621.24,0.89,High,Elevated High Cases
+ACC-0100,Synergy Tech 100,Manufacturing,3,1683.01,5263.21,Month-to-Month,1,3,3,2,5.0,0,0,0.667,1.0,20196.12,0.99,High,Elevated Escalated Cases
+ACC-0101,Stratum Ventures 101,Retail,50,1643.93,75428.78,One Year,0,0,0,0,0.0,0,0,0.0,0.0,19727.16,0.08,Low,Elevated Industry Retail
+ACC-0102,Nexus Logistics 102,Retail,16,1498.77,22609.52,Two Year,0,3,3,0,4.33,0,1,0.0,0.188,17985.24,0.06,Low,Elevated Industry Retail
+ACC-0103,Stratum Software 103,Finance,27,3563.32,98875.06,One Year,1,1,1,0,3.0,0,0,0.0,0.037,42759.84,0.73,High,Elevated Monthly Charges
+ACC-0104,Vertex Logistics 104,Healthcare,24,2467.87,55409.23,One Year,0,0,0,0,0.0,0,0,0.0,0.0,29614.44,0.14,Low,Elevated Industry Healthcare
+ACC-0105,Synergy Media 105,Retail,30,1977.9,56686.81,Two Year,0,0,0,0,0.0,0,0,0.0,0.0,23734.8,0.1,Low,Elevated Industry Retail
+ACC-0106,Stratum Health 106,Retail,18,1232.88,22916.11,Month-to-Month,1,4,4,0,3.5,0,0,0.0,0.222,14794.56,0.74,High,Elevated Industry Retail
+ACC-0107,Nova Ventures 107,Retail,42,3201.89,139402.25,Month-to-Month,1,2,2,2,5.5,1,0,1.0,0.048,38422.68,0.98,High,Elevated Escalated Cases
+ACC-0108,Vertex Software 108,Healthcare,18,2043.06,36600.71,One Year,0,1,1,0,3.0,0,0,0.0,0.056,24516.72,0.27,Low,Elevated Contract Type Two Year
+ACC-0109,Nova Labs 109,Retail,19,1982.45,34771.09,One Year,1,3,3,1,7.67,0,1,0.333,0.158,23789.4,0.57,Medium,Elevated Escalation Rate
+ACC-0110,Apex Solutions 110,Education,27,3888.77,103089.69,One Year,1,1,1,1,2.0,1,0,1.0,0.037,46665.24,0.94,High,Elevated Escalation Rate
+ACC-0111,Nexus Systems 111,Education,14,2839.33,36132.8,Month-to-Month,1,9,9,6,6.67,0,4,0.667,0.643,34071.96,1.0,High,Elevated Escalated Cases
+ACC-0112,Apex Software 112,Manufacturing,12,2679.56,31821.21,Two Year,0,3,3,1,3.67,0,1,0.333,0.25,32154.72,0.4,Medium,Elevated Avg Monthly Case Load
+ACC-0113,Quantum Systems 113,Manufacturing,42,3604.07,147683.29,One Year,0,1,1,0,10.0,0,0,0.0,0.024,43248.84,0.25,Low,Elevated Avg Days To Resolve
+ACC-0114,Vertex Ventures 114,Finance,11,2479.56,27799.79,Month-to-Month,1,5,5,2,9.8,0,0,0.4,0.455,29754.72,1.0,High,Elevated Escalated Cases
+ACC-0115,Stratum Solutions 115,Education,13,2777.2,35541.78,One Year,0,0,0,0,0.0,0,0,0.0,0.0,33326.4,0.17,Low,Elevated Tenure Months
+ACC-0116,Apex Tech 116,Finance,15,3297.01,49508.11,Two Year,1,1,1,0,3.0,0,0,0.0,0.067,39564.12,0.35,Low,Elevated Contract Type One Year
+ACC-0117,Apex Labs 117,Manufacturing,14,2220.59,29217.67,One Year,1,5,5,2,7.0,0,2,0.4,0.357,26647.08,0.99,High,Elevated Escalated Cases
+ACC-0118,Nexus Analytics 118,Education,37,3086.11,105132.53,Month-to-Month,1,2,2,0,11.0,0,0,0.0,0.054,37033.32,0.7,Medium,Elevated Avg Days To Resolve
+ACC-0119,Quantum Labs 119,Manufacturing,31,2777.19,79966.49,Month-to-Month,1,1,1,1,4.0,1,0,1.0,0.032,33326.28,0.97,High,Elevated Escalation Rate
+ACC-0120,Quantum Logistics 120,Education,81,2990.22,243600.09,Month-to-Month,0,1,1,0,1.0,0,0,0.0,0.012,35882.64,0.16,Low,Elevated Contract Type One Year
+ACC-0121,Vertex Labs 121,Education,16,2673.95,41990.8,Two Year,0,3,3,0,2.0,0,0,0.0,0.188,32087.4,0.2,Low,Elevated Contract Type One Year
+ACC-0122,Quantum Media 122,Education,54,3806.75,193383.41,Month-to-Month,0,3,3,0,3.67,0,0,0.0,0.056,45681.0,0.22,Low,Elevated Contract Type One Year
+ACC-0123,Nova Ventures 123,Education,45,2862.83,134013.27,Two Year,0,2,2,0,3.0,0,1,0.0,0.044,34353.96,0.05,Low,Elevated Contract Type One Year
+ACC-0124,Stratum Analytics 124,Healthcare,9,2361.54,20460.72,Two Year,0,1,1,1,14.0,1,0,1.0,0.111,28338.48,0.34,Low,Elevated Escalation Rate
+ACC-0125,Nova Software 125,Technology,9,777.29,6305.77,One Year,0,0,0,0,0.0,0,0,0.0,0.0,9327.48,0.22,Low,Elevated Total Charges
+ACC-0126,Vertex Tech 126,Finance,12,1949.48,22648.72,One Year,1,3,3,0,1.0,0,0,0.0,0.25,23393.76,0.55,Medium,Elevated Avg Monthly Case Load
+ACC-0127,Quantum Labs 127,Education,33,4451.8,148906.25,Month-to-Month,1,3,3,1,4.0,0,1,0.333,0.091,53421.6,0.76,High,Elevated Monthly Charges
+ACC-0128,Quantum Tech 128,Finance,26,1896.83,48694.66,One Year,0,1,1,0,1.0,0,0,0.0,0.038,22761.96,0.21,Low,Elevated Contract Type Two Year
+ACC-0129,Nexus Software 129,Healthcare,20,3613.6,69439.84,One Year,0,3,3,0,1.67,0,0,0.0,0.15,43363.2,0.3,Low,Elevated Monthly Charges
+ACC-0130,Cloud Media 130,Manufacturing,29,1225.61,36026.16,Two Year,0,2,2,0,1.5,0,0,0.0,0.069,14707.32,0.04,Low,Elevated Contract Type One Year
+ACC-0131,Beacon Systems 131,Technology,19,2934.64,57113.98,Two Year,0,1,1,0,5.0,0,0,0.0,0.053,35215.68,0.14,Low,Elevated Contract Type One Year
+ACC-0132,Nexus Systems 132,Education,23,1504.91,32218.07,One Year,1,1,1,0,1.0,0,1,0.0,0.043,18058.92,0.33,Low,Elevated Contract Type Two Year
+ACC-0133,Stratum Ventures 133,Manufacturing,11,2723.2,29493.49,One Year,1,4,4,2,6.25,0,0,0.5,0.364,32678.4,0.98,High,Elevated Escalated Cases
+ACC-0134,Nova Ventures 134,Finance,7,2429.37,17837.65,Month-to-Month,0,6,6,1,2.17,0,0,0.167,0.857,29152.44,0.97,High,Elevated Escalated Cases
+ACC-0135,Vertex Analytics 135,Education,12,1688.19,19506.42,One Year,1,1,1,1,3.0,0,0,1.0,0.083,20258.28,0.91,High,Elevated Escalation Rate
+ACC-0136,Apex Solutions 136,Retail,16,2764.7,44270.74,Two Year,1,7,7,1,2.29,0,1,0.143,0.438,33176.4,0.85,High,Elevated Escalated Cases
+ACC-0137,Cloud Media 137,Finance,17,1776.87,30341.1,Month-to-Month,0,4,4,0,4.0,0,0,0.0,0.235,21322.44,0.21,Low,Elevated Contract Type One Year
+ACC-0138,Nexus Tech 138,Technology,7,2653.64,18210.39,Two Year,0,0,0,0,0.0,0,0,0.0,0.0,31843.68,0.16,Low,Elevated Tenure Months
+ACC-0139,Apex Software 139,Manufacturing,28,3265.36,91526.15,One Year,0,0,0,0,0.0,0,0,0.0,0.0,39184.32,0.17,Low,Elevated Total Charges
+ACC-0140,Vertex Logistics 140,Retail,9,1031.04,9359.59,One Year,1,2,2,0,4.5,0,1,0.0,0.222,12372.48,0.6,Medium,Elevated Total Charges
+ACC-0141,Nexus Logistics 141,Education,19,2420.89,45567.31,Month-to-Month,1,2,2,1,4.0,0,0,0.5,0.105,29050.68,0.95,High,Elevated Escalation Rate
+ACC-0142,Nexus Solutions 142,Technology,26,3368.72,89375.46,One Year,1,0,0,0,0.0,0,0,0.0,0.0,40424.64,0.61,Medium,Elevated Monthly Charges
+ACC-0143,Synergy Logistics 143,Finance,18,3154.21,53763.16,Month-to-Month,1,3,3,0,3.0,0,0,0.0,0.167,37850.52,0.62,Medium,Elevated Contract Type One Year
+ACC-0144,Synergy Software 144,Manufacturing,25,2443.6,63837.6,One Year,0,2,2,0,1.5,0,1,0.0,0.08,29323.2,0.05,Low,Elevated Contract Type Two Year
+ACC-0145,Apex Media 145,Technology,43,3475.01,153289.61,Month-to-Month,1,4,4,3,2.25,0,1,0.75,0.093,41700.12,0.95,High,Elevated Escalated Cases
+ACC-0146,Cloud Analytics 146,Technology,17,2628.46,43763.9,Month-to-Month,1,6,6,3,4.33,1,2,0.5,0.353,31541.52,1.0,High,Elevated Escalated Cases
+ACC-0147,Vertex Ventures 147,Manufacturing,12,499.0,5727.97,One Year,0,0,0,0,0.0,0,0,0.0,0.0,5988.0,0.18,Low,Elevated Total Charges
+ACC-0148,Apex Health 148,Technology,10,2487.75,24255.03,Month-to-Month,1,4,4,1,2.25,0,1,0.25,0.4,29853.0,0.95,High,Elevated Escalated Cases
+ACC-0149,Synergy Analytics 149,Healthcare,6,1209.15,7168.24,One Year,1,4,4,1,7.25,0,1,0.25,0.667,14509.8,0.94,High,Elevated Tenure Months
+ACC-0150,Cloud Logistics 150,Technology,20,3093.68,58847.29,One Year,0,2,2,0,2.0,0,0,0.0,0.1,37124.16,0.05,Low,Elevated Contract Type Two Year
+ACC-0151,Cloud Ventures 151,Healthcare,54,2609.23,141173.77,One Year,0,0,0,0,0.0,0,0,0.0,0.0,31310.76,0.09,Low,Elevated Industry Healthcare
+ACC-0152,Vertex Labs 152,Finance,13,1422.3,18854.3,One Year,0,0,0,0,0.0,0,0,0.0,0.0,17067.6,0.26,Low,Elevated Tenure Months
+ACC-0153,Vertex Software 153,Healthcare,8,2929.32,22426.87,One Year,1,2,2,2,22.5,0,1,1.0,0.25,35151.84,0.96,High,Elevated Escalated Cases
+ACC-0154,Vertex Health 154,Manufacturing,11,1362.55,14498.34,One Year,1,1,1,1,17.0,0,0,1.0,0.091,16350.6,0.89,High,Elevated Escalation Rate
+ACC-0155,Beacon Tech 155,Manufacturing,24,4232.0,91599.21,Month-to-Month,1,6,6,3,8.0,0,1,0.5,0.25,50784.0,0.99,High,Elevated Escalated Cases
+ACC-0156,Beacon Ventures 156,Finance,49,2745.93,129980.35,Month-to-Month,0,5,5,0,3.2,0,1,0.0,0.102,32951.16,0.1,Low,Elevated Contract Type One Year
+ACC-0157,Stratum Health 157,Education,20,1462.53,29693.53,Month-to-Month,1,8,8,5,7.38,1,1,0.625,0.4,17550.36,0.97,High,Elevated Escalated Cases
+ACC-0158,Beacon Analytics 158,Retail,17,2332.78,41542.61,One Year,1,2,2,1,2.0,0,2,0.5,0.118,27993.36,0.91,High,Elevated Escalation Rate
+ACC-0159,Beacon Labs 159,Healthcare,36,2012.17,70038.01,Month-to-Month,1,1,1,0,16.0,0,0,0.0,0.028,24146.04,0.83,High,Elevated Avg Days To Resolve
+ACC-0160,Apex Solutions 160,Technology,8,3881.57,29323.39,Two Year,1,5,5,0,1.6,0,1,0.0,0.625,46578.84,0.67,Medium,Elevated Monthly Charges
+ACC-0161,Stratum Health 161,Retail,12,2647.64,29357.68,One Year,1,6,6,3,6.17,1,2,0.5,0.5,31771.68,0.99,High,Elevated Escalated Cases
+ACC-0162,Synergy Labs 162,Manufacturing,51,1926.54,97437.67,One Year,0,0,0,0,0.0,0,0,0.0,0.0,23118.48,0.1,Low,Elevated Total Charges
+ACC-0163,Synergy Tech 163,Manufacturing,26,1680.65,43373.74,Two Year,0,2,2,0,3.0,0,0,0.0,0.077,20167.8,0.03,Low,Elevated Contract Type One Year
+ACC-0164,Nova Media 164,Manufacturing,51,3734.59,183366.61,Month-to-Month,0,0,0,0,0.0,0,0,0.0,0.0,44815.08,0.2,Low,Elevated Monthly Charges
+ACC-0165,Cloud Ventures 165,Healthcare,7,2612.71,17795.18,One Year,0,2,2,0,5.5,0,1,0.0,0.286,31352.52,0.24,Low,Elevated Tenure Months
+ACC-0166,Synergy Analytics 166,Manufacturing,25,2073.84,47723.22,Two Year,0,0,0,0,0.0,0,0,0.0,0.0,24886.08,0.04,Low,Elevated Contract Type One Year
+ACC-0167,Stratum Media 167,Education,17,3829.01,63416.73,One Year,0,3,3,0,4.0,0,0,0.0,0.176,45948.12,0.25,Low,Elevated Monthly Charges
+ACC-0168,Nexus Media 168,Retail,17,2337.06,36431.7,Month-to-Month,1,5,5,1,2.0,0,0,0.2,0.294,28044.72,0.96,High,Elevated Escalated Cases
+ACC-0169,Beacon Tech 169,Education,15,3089.48,45950.11,Month-to-Month,0,3,3,0,0.33,0,1,0.0,0.2,37073.76,0.28,Low,Elevated Contract Type One Year
+ACC-0170,Stratum Systems 170,Healthcare,29,1496.57,45328.2,One Year,0,2,2,0,0.0,0,1,0.0,0.069,17958.84,0.08,Low,Elevated Contract Type Two Year
+ACC-0171,Cloud Solutions 171,Healthcare,65,2660.46,170615.03,Month-to-Month,1,1,1,0,3.0,0,0,0.0,0.015,31925.52,0.54,Medium,Elevated Contract Type One Year
+ACC-0172,Vertex Ventures 172,Retail,20,2206.38,44677.89,One Year,1,1,1,0,5.0,0,0,0.0,0.05,26476.56,0.53,Medium,Elevated Industry Retail
+ACC-0173,Vertex Solutions 173,Education,10,609.65,6094.19,Month-to-Month,1,4,4,2,5.25,1,0,0.5,0.4,7315.8,0.99,High,Elevated Escalated Cases
+ACC-0174,Nexus Analytics 174,Technology,13,1737.34,23475.62,Month-to-Month,1,7,7,3,7.29,0,0,0.429,0.538,20848.08,0.98,High,Elevated Escalated Cases
+ACC-0175,Vertex Ventures 175,Education,19,2590.62,45275.49,Month-to-Month,1,8,8,5,9.38,1,2,0.625,0.421,31087.44,1.0,High,Elevated Escalated Cases
+ACC-0176,Beacon Labs 176,Finance,9,2838.88,25980.32,One Year,0,6,6,0,1.5,0,0,0.0,0.667,34066.56,0.13,Low,Elevated Tenure Months
+ACC-0177,Vertex Analytics 177,Retail,20,2963.71,53947.22,Month-to-Month,1,2,2,1,11.0,0,1,0.5,0.1,35564.52,0.92,High,Elevated Escalation Rate
+ACC-0178,Vertex Media 178,Retail,8,3411.9,27087.95,Month-to-Month,1,4,4,3,2.5,0,2,0.75,0.5,40942.8,1.0,High,Elevated Escalated Cases
+ACC-0179,Nexus Labs 179,Retail,38,3792.3,130886.16,One Year,0,3,3,0,4.67,0,0,0.0,0.079,45507.6,0.15,Low,Elevated Monthly Charges
+ACC-0180,Quantum Systems 180,Technology,7,3450.14,22949.51,Month-to-Month,1,6,6,5,16.5,2,2,0.833,0.857,41401.68,0.99,High,Elevated Escalated Cases
+ACC-0181,Cloud Logistics 181,Finance,25,2827.85,66259.32,Two Year,0,1,1,0,1.0,0,0,0.0,0.04,33934.2,0.19,Low,Elevated Contract Type One Year
+ACC-0182,Apex Health 182,Healthcare,34,2403.7,83413.5,Two Year,0,0,0,0,0.0,0,0,0.0,0.0,28844.4,0.16,Low,Elevated Contract Type One Year
+ACC-0183,Cloud Systems 183,Manufacturing,17,2765.58,48420.83,One Year,1,2,2,1,10.0,0,1,0.5,0.118,33186.96,0.47,Medium,Elevated Escalation Rate
+ACC-0184,Synergy Labs 184,Manufacturing,9,3368.79,31825.0,One Year,1,3,3,2,3.67,0,1,0.667,0.333,40425.48,0.98,High,Elevated Escalated Cases
+ACC-0185,Cloud Software 185,Technology,14,1657.05,21592.87,Two Year,1,1,1,0,5.0,0,1,0.0,0.071,19884.6,0.04,Low,Elevated Tenure Months
+ACC-0186,Quantum Systems 186,Technology,32,3868.49,128519.43,Two Year,1,0,0,0,0.0,0,0,0.0,0.0,46421.88,0.49,Medium,Elevated Monthly Charges
+ACC-0187,Stratum Ventures 187,Education,11,2556.04,29081.87,One Year,1,3,3,1,10.33,1,0,0.333,0.273,30672.48,0.95,High,Elevated Escalation Rate
+ACC-0188,Cloud Tech 188,Finance,20,3300.84,63898.56,Month-to-Month,1,9,9,5,6.78,2,3,0.556,0.45,39610.08,0.99,High,Elevated Escalated Cases
+ACC-0189,Apex Logistics 189,Healthcare,11,1906.02,19492.71,Month-to-Month,1,2,2,1,7.0,1,0,0.5,0.182,22872.24,0.98,High,Elevated Escalation Rate
+ACC-0190,Nexus Health 190,Technology,6,2433.52,15123.28,Two Year,0,1,1,1,2.0,0,1,1.0,0.167,29202.24,0.67,Medium,Elevated Tenure Months
+ACC-0191,Beacon Ventures 191,Education,11,2252.63,23769.18,Month-to-Month,1,6,6,3,6.5,0,1,0.5,0.545,27031.56,0.99,High,Elevated Escalated Cases
+ACC-0192,Stratum Solutions 192,Finance,11,1289.03,14702.57,One Year,1,2,2,1,21.0,0,0,0.5,0.182,15468.36,0.91,High,Elevated Escalation Rate
+ACC-0193,Stratum Tech 193,Retail,16,2113.55,35505.64,Two Year,0,1,1,0,3.0,0,0,0.0,0.062,25362.6,0.15,Low,Elevated Industry Retail
+ACC-0194,Apex Logistics 194,Retail,15,1787.05,27528.86,One Year,0,2,2,0,4.5,0,1,0.0,0.133,21444.6,0.06,Low,Elevated Contract Type Two Year
+ACC-0195,Apex Tech 195,Retail,14,1627.68,22435.25,One Year,0,1,1,0,7.0,0,1,0.0,0.071,19532.16,0.23,Low,Elevated Industry Retail
+ACC-0196,Quantum Health 196,Manufacturing,32,2729.7,79112.78,Month-to-Month,1,1,1,1,4.0,0,1,1.0,0.031,32756.4,0.91,High,Elevated Escalation Rate
+ACC-0197,Beacon Logistics 197,Healthcare,10,2061.02,19602.65,Month-to-Month,1,5,5,4,7.8,0,2,0.8,0.5,24732.24,1.0,High,Elevated Escalated Cases
+ACC-0198,Synergy Health 198,Education,40,2299.96,96166.98,One Year,0,1,1,0,3.0,0,0,0.0,0.025,27599.52,0.44,Medium,Elevated Total Charges
+ACC-0199,Nova Ventures 199,Finance,11,1627.23,18080.3,Month-to-Month,1,4,4,1,4.0,0,1,0.25,0.364,19526.76,0.93,High,Elevated Escalated Cases
+ACC-0200,Synergy Tech 200,Healthcare,5,1855.3,9234.09,Two Year,1,0,0,0,0.0,0,0,0.0,0.0,22263.6,0.77,High,Elevated Tenure Months
+ACC-0201,Synergy Solutions 201,Technology,38,1852.32,66149.52,Month-to-Month,1,1,1,1,39.0,0,0,1.0,0.026,22227.84,0.93,High,Elevated Escalation Rate
+ACC-0202,Cloud Solutions 202,Education,13,2412.31,30198.08,Month-to-Month,1,2,2,0,3.0,0,0,0.0,0.154,28947.72,0.77,High,Elevated Contract Type One Year
+ACC-0203,Pulse Health 203,Manufacturing,14,3057.56,38998.53,Two Year,1,5,5,5,6.6,2,2,1.0,0.357,36690.72,0.95,High,Elevated Escalated Cases
+ACC-0204,Pulse Ventures 204,Education,26,2900.68,74144.39,Two Year,0,1,1,0,0.0,0,0,0.0,0.038,34808.16,0.25,Low,Elevated Contract Type One Year
+ACC-0205,Cloud Labs 205,Retail,9,916.56,8463.34,Month-to-Month,1,4,4,3,24.75,1,0,0.75,0.444,10998.72,0.99,High,Elevated Escalated Cases
+ACC-0206,Stratum Ventures 206,Healthcare,7,2897.36,19382.1,Month-to-Month,1,7,7,4,6.57,0,3,0.571,1.0,34768.32,0.99,High,Elevated Escalated Cases
+ACC-0207,Beacon Labs 207,Healthcare,12,3400.84,37465.38,One Year,1,2,2,1,4.5,1,1,0.5,0.167,40810.08,0.91,High,Elevated Escalation Rate
+ACC-0208,Nova Labs 208,Finance,3,5010.2,14248.44,One Year,1,4,4,1,4.25,0,2,0.25,1.333,60122.4,0.98,High,Elevated Tenure Months
+ACC-0209,Vertex Systems 209,Retail,14,2974.85,42353.07,One Year,0,2,2,0,3.0,0,1,0.0,0.143,35698.2,0.09,Low,Elevated Tenure Months
+ACC-0210,Cloud Health 210,Retail,10,2825.64,28010.52,One Year,0,3,3,0,3.0,0,1,0.0,0.3,33907.68,0.14,Low,Elevated Industry Retail
+ACC-0211,Vertex Logistics 211,Healthcare,12,3080.08,34930.77,One Year,0,1,1,0,4.0,0,0,0.0,0.083,36960.96,0.13,Low,Elevated Contract Type Two Year
+ACC-0212,Vertex Logistics 212,Manufacturing,36,3066.64,102859.73,Two Year,0,1,1,0,1.0,0,1,0.0,0.028,36799.68,0.07,Low,Elevated Contract Type One Year
+ACC-0213,Stratum Health 213,Technology,20,1866.06,35330.8,One Year,1,2,2,0,1.5,0,2,0.0,0.1,22392.72,0.44,Medium,Elevated High Cases
+ACC-0214,Nexus Analytics 214,Finance,18,1846.33,33423.21,Month-to-Month,1,2,2,1,9.5,0,1,0.5,0.111,22155.96,0.9,High,Elevated Escalation Rate
+ACC-0215,Nexus Labs 215,Retail,19,3163.58,57250.72,Month-to-Month,1,6,6,3,8.0,1,2,0.5,0.316,37962.96,1.0,High,Elevated Escalated Cases
+ACC-0216,Quantum Ventures 216,Manufacturing,20,2106.69,43302.5,One Year,1,3,3,2,4.0,1,1,0.667,0.15,25280.28,0.89,High,Elevated Escalated Cases
+ACC-0217,Vertex Solutions 217,Technology,25,2080.73,49440.36,Month-to-Month,1,2,2,2,1.5,0,2,1.0,0.08,24968.76,0.98,High,Elevated Escalated Cases
+ACC-0218,Apex Labs 218,Manufacturing,14,2624.15,36704.28,One Year,0,0,0,0,0.0,0,0,0.0,0.0,31489.8,0.15,Low,Elevated Tenure Months
+ACC-0219,Apex Solutions 219,Finance,35,2119.02,69635.21,Month-to-Month,1,6,6,3,2.83,0,3,0.5,0.171,25428.24,0.99,High,Elevated Escalated Cases
+ACC-0220,Vertex Logistics 220,Finance,32,3488.9,104220.33,Two Year,0,0,0,0,0.0,0,0,0.0,0.0,41866.8,0.34,Low,Elevated Monthly Charges
+ACC-0221,Cloud Tech 221,Finance,34,2388.44,76260.15,Month-to-Month,1,5,5,3,9.6,1,1,0.6,0.147,28661.28,0.99,High,Elevated Escalated Cases
+ACC-0222,Nova Systems 222,Manufacturing,26,1588.93,39242.21,Two Year,0,1,1,1,1.0,0,1,1.0,0.038,19067.16,0.09,Low,Elevated Escalation Rate
+ACC-0223,Nova Labs 223,Healthcare,22,1804.27,38639.53,One Year,1,3,3,2,2.0,0,0,0.667,0.136,21651.24,0.92,High,Elevated Escalated Cases
+ACC-0224,Pulse Analytics 224,Education,18,1698.25,27530.56,One Year,0,0,0,0,0.0,0,0,0.0,0.0,20379.0,0.14,Low,Elevated Contract Type Two Year
+ACC-0225,Pulse Tech 225,Finance,8,499.0,3670.0,Month-to-Month,1,2,2,1,20.5,1,0,0.5,0.25,5988.0,0.97,High,Elevated Escalation Rate
+ACC-0226,Nova Tech 226,Manufacturing,7,3391.46,22645.5,Month-to-Month,1,2,2,1,2.5,0,1,0.5,0.286,40697.52,0.98,High,Elevated Escalation Rate
+ACC-0227,Nova Systems 227,Finance,43,2581.49,111744.08,One Year,0,0,0,0,0.0,0,0,0.0,0.0,30977.88,0.07,Low,Elevated Contract Type Two Year
+ACC-0228,Cloud Software 228,Retail,20,2540.71,50482.39,One Year,1,2,2,2,3.0,1,0,1.0,0.1,30488.52,0.96,High,Elevated Escalated Cases
+ACC-0229,Nova Logistics 229,Education,27,2359.32,63883.89,Month-to-Month,1,7,7,5,4.14,1,3,0.714,0.259,28311.84,0.99,High,Elevated Escalated Cases
+ACC-0230,Nexus Health 230,Technology,24,3412.12,83277.21,Month-to-Month,1,6,6,3,8.83,1,1,0.5,0.25,40945.44,0.99,High,Elevated Escalated Cases
+ACC-0231,Synergy Tech 231,Healthcare,30,4118.88,113319.63,Month-to-Month,1,3,3,0,0.33,0,1,0.0,0.1,49426.56,0.81,High,Elevated Monthly Charges
+ACC-0232,Beacon Solutions 232,Retail,6,2286.68,13744.21,Month-to-Month,1,8,8,3,9.0,0,1,0.375,1.333,27440.16,1.0,High,Elevated Escalated Cases
+ACC-0233,Apex Analytics 233,Education,23,2840.71,67959.96,One Year,1,1,1,0,3.0,0,0,0.0,0.043,34088.52,0.41,Medium,Elevated Avg Monthly Case Load
+ACC-0234,Synergy Logistics 234,Finance,28,1465.38,42898.43,Month-to-Month,1,2,2,0,4.0,0,0,0.0,0.071,17584.56,0.23,Low,Elevated Contract Type One Year
+ACC-0235,Nexus Tech 235,Technology,7,1499.67,10992.14,One Year,0,3,3,0,1.33,0,1,0.0,0.429,17996.04,0.29,Low,Elevated Total Charges
+ACC-0236,Synergy Tech 236,Technology,14,1981.97,28371.58,Two Year,0,3,3,0,2.0,0,0,0.0,0.214,23783.64,0.09,Low,Elevated Tenure Months
+ACC-0237,Stratum Media 237,Finance,5,1531.06,7695.98,Month-to-Month,1,3,3,1,0.0,0,1,0.333,0.6,18372.72,0.96,High,Elevated Tenure Months
+ACC-0238,Vertex Ventures 238,Technology,13,3049.05,41183.28,Two Year,0,3,3,0,6.67,0,1,0.0,0.231,36588.6,0.24,Low,Elevated Contract Type One Year
+ACC-0239,Stratum Health 239,Education,53,2397.96,125412.13,One Year,0,1,1,0,0.0,0,0,0.0,0.019,28775.52,0.07,Low,Elevated Contract Type Two Year
+ACC-0240,Stratum Ventures 240,Manufacturing,31,2163.39,70212.13,Two Year,0,0,0,0,0.0,0,0,0.0,0.0,25960.68,0.07,Low,Elevated Contract Type One Year
+ACC-0241,Pulse Software 241,Manufacturing,28,3488.63,102032.29,Two Year,1,2,2,2,6.0,0,2,1.0,0.071,41863.56,0.94,High,Elevated Escalated Cases
+ACC-0242,Stratum Logistics 242,Healthcare,13,2434.78,29482.6,One Year,1,0,0,0,0.0,0,0,0.0,0.0,29217.36,0.63,Medium,Elevated Tenure Months
+ACC-0243,Synergy Health 243,Education,2,1630.2,3252.29,Two Year,0,1,1,0,10.0,0,0,0.0,0.5,19562.4,0.62,Medium,Elevated Tenure Months
+ACC-0244,Synergy Media 244,Manufacturing,27,1580.96,42148.97,Two Year,0,0,0,0,0.0,0,0,0.0,0.0,18971.52,0.02,Low,Elevated Contract Type One Year
+ACC-0245,Cloud Media 245,Finance,35,2128.48,76852.51,Month-to-Month,1,8,8,4,5.88,0,2,0.5,0.229,25541.76,0.99,High,Elevated Escalated Cases
+ACC-0246,Apex Analytics 246,Education,33,1701.55,52653.0,One Year,1,1,1,0,5.0,0,1,0.0,0.03,20418.6,0.08,Low,Elevated Contract Type Two Year
+ACC-0247,Synergy Labs 247,Retail,9,2243.47,20408.64,Month-to-Month,1,7,7,4,14.0,0,3,0.571,0.778,26921.64,1.0,High,Elevated Escalated Cases
+ACC-0248,Nova Media 248,Technology,8,2190.32,17836.89,Month-to-Month,1,2,2,2,24.0,0,0,1.0,0.25,26283.84,0.99,High,Elevated Escalated Cases
+ACC-0249,Beacon Media 249,Manufacturing,41,3212.31,138223.39,Two Year,0,2,2,1,10.0,0,1,0.5,0.049,38547.72,0.3,Low,Elevated Escalation Rate
+ACC-0250,Synergy Ventures 250,Technology,24,2079.17,47798.36,One Year,0,1,1,0,1.0,0,1,0.0,0.042,24950.04,0.12,Low,Elevated Contract Type Two Year
+ACC-0251,Stratum Solutions 251,Manufacturing,15,3347.95,45527.65,Two Year,0,2,2,0,3.5,0,1,0.0,0.133,40175.4,0.2,Low,Elevated Monthly Charges
+ACC-0252,Pulse Ventures 252,Technology,14,2614.71,34074.16,Two Year,1,2,2,0,0.5,0,0,0.0,0.143,31376.52,0.5,Medium,Elevated Avg Days To Resolve
+ACC-0253,Apex Systems 253,Technology,8,2071.36,15048.68,One Year,0,1,1,0,1.0,0,0,0.0,0.125,24856.32,0.25,Low,Elevated Tenure Months
+ACC-0254,Cloud Solutions 254,Education,20,2901.43,55746.17,Month-to-Month,1,3,3,1,5.67,0,0,0.333,0.15,34817.16,0.89,High,Elevated Contract Type One Year
+ACC-0255,Beacon Systems 255,Finance,25,2315.68,58748.29,Month-to-Month,1,5,5,2,4.2,0,2,0.4,0.2,27788.16,0.98,High,Elevated Escalated Cases
+ACC-0256,Beacon Ventures 256,Retail,11,2641.46,28536.79,Month-to-Month,1,4,4,2,9.25,0,1,0.5,0.364,31697.52,1.0,High,Elevated Escalated Cases
+ACC-0257,Stratum Solutions 257,Education,20,1601.96,31476.9,Month-to-Month,0,4,4,1,6.0,0,1,0.25,0.2,19223.52,0.2,Low,Elevated Contract Type One Year
+ACC-0258,Synergy Tech 258,Manufacturing,33,3435.67,104907.38,Month-to-Month,1,5,5,2,3.6,0,1,0.4,0.152,41228.04,0.97,High,Elevated Escalated Cases
+ACC-0259,Vertex Analytics 259,Retail,15,2394.82,35733.49,Two Year,1,3,3,1,2.67,1,0,0.333,0.2,28737.84,0.8,High,Elevated Escalation Rate
+ACC-0260,Quantum Health 260,Manufacturing,13,2710.79,34365.2,Month-to-Month,1,1,1,1,3.0,0,0,1.0,0.077,32529.48,0.96,High,Elevated Escalation Rate
+ACC-0261,Beacon Health 261,Retail,25,2446.26,56328.54,Month-to-Month,1,9,9,3,4.78,0,3,0.333,0.36,29355.12,0.99,High,Elevated Escalated Cases
+ACC-0262,Synergy Solutions 262,Manufacturing,10,1395.16,14413.06,Month-to-Month,1,5,5,3,9.2,0,0,0.6,0.5,16741.92,0.99,High,Elevated Escalated Cases
+ACC-0263,Beacon Health 263,Healthcare,27,2520.31,67669.41,Month-to-Month,1,0,0,0,0.0,0,0,0.0,0.0,30243.72,0.74,High,Elevated Contract Type One Year
+ACC-0264,Beacon Health 264,Technology,13,3654.91,43947.97,Two Year,1,1,1,1,13.0,1,0,1.0,0.077,43858.92,0.77,High,Elevated Escalation Rate
+ACC-0265,Quantum Systems 265,Healthcare,13,2956.49,37180.66,Two Year,1,0,0,0,0.0,0,0,0.0,0.0,35477.88,0.64,Medium,Elevated Tenure Months
+ACC-0266,Nexus Health 266,Healthcare,8,1839.67,15078.74,One Year,1,0,0,0,0.0,0,0,0.0,0.0,22076.04,0.75,High,Elevated Tenure Months
+ACC-0267,Beacon Health 267,Retail,25,2939.11,73400.4,Month-to-Month,1,6,6,2,5.0,0,2,0.333,0.24,35269.32,0.99,High,Elevated Escalated Cases
+ACC-0268,Cloud Media 268,Manufacturing,23,2985.48,65614.29,Month-to-Month,1,4,4,2,5.0,1,0,0.5,0.174,35825.76,0.97,High,Elevated Escalated Cases
+ACC-0269,Cloud Software 269,Healthcare,22,1932.34,38295.21,One Year,0,0,0,0,0.0,0,0,0.0,0.0,23188.08,0.16,Low,Elevated Industry Healthcare
+ACC-0270,Apex Labs 270,Retail,65,2846.37,169782.64,Month-to-Month,1,1,1,0,2.0,0,0,0.0,0.015,34156.44,0.62,Medium,Elevated Industry Retail
+ACC-0271,Nova Ventures 271,Education,12,1231.21,14594.35,Month-to-Month,0,5,5,0,1.2,0,0,0.0,0.417,14774.52,0.3,Low,Elevated Contract Type One Year
+ACC-0272,Nova Systems 272,Healthcare,9,2173.52,19097.12,One Year,0,2,2,0,2.0,0,1,0.0,0.222,26082.24,0.3,Low,Elevated Tenure Months
+ACC-0273,Nexus Labs 273,Manufacturing,7,4596.63,29384.18,Month-to-Month,1,3,3,0,4.0,0,0,0.0,0.429,55159.56,0.89,High,Elevated Monthly Charges
+ACC-0274,Apex Logistics 274,Education,17,3478.86,61483.4,One Year,1,4,4,2,3.0,0,0,0.5,0.235,41746.32,0.97,High,Elevated Escalated Cases
+ACC-0275,Vertex Systems 275,Retail,41,3178.74,122857.15,Two Year,0,1,1,0,0.0,0,1,0.0,0.024,38144.88,0.12,Low,Elevated Industry Retail
+ACC-0276,Beacon Logistics 276,Manufacturing,36,2106.48,78825.44,One Year,0,0,0,0,0.0,0,0,0.0,0.0,25277.76,0.12,Low,Elevated Contract Type Two Year
+ACC-0277,Quantum Health 277,Manufacturing,11,2016.2,21644.5,One Year,0,2,2,0,1.5,0,0,0.0,0.182,24194.4,0.19,Low,Elevated Tenure Months
+ACC-0278,Nexus Ventures 278,Retail,16,2494.78,38820.55,Month-to-Month,1,6,6,3,5.17,0,2,0.5,0.375,29937.36,1.0,High,Elevated Escalated Cases
+ACC-0279,Pulse Labs 279,Finance,42,2657.83,103526.58,One Year,1,1,1,1,10.0,0,1,1.0,0.024,31893.96,0.87,High,Elevated Escalation Rate
+ACC-0280,Pulse Software 280,Healthcare,8,2818.34,21067.23,Two Year,0,1,1,0,0.0,0,0,0.0,0.125,33820.08,0.26,Low,Elevated Tenure Months
+ACC-0281,Vertex Solutions 281,Retail,31,2512.49,70175.86,Two Year,1,1,1,0,1.0,0,0,0.0,0.032,30149.88,0.73,High,Elevated Industry Retail
+ACC-0282,Beacon Software 282,Manufacturing,25,3324.46,77080.16,One Year,0,3,3,0,1.0,0,1,0.0,0.12,39893.52,0.07,Low,Elevated Contract Type Two Year
+ACC-0283,Vertex Media 283,Manufacturing,8,3178.54,24089.46,Month-to-Month,1,4,4,3,2.75,0,0,0.75,0.5,38142.48,0.99,High,Elevated Escalated Cases
+ACC-0284,Nexus Health 284,Retail,22,1248.16,25253.72,One Year,1,2,2,2,43.0,0,0,1.0,0.091,14977.92,0.95,High,Elevated Escalated Cases
+ACC-0285,Nova Solutions 285,Technology,35,2875.41,93241.46,One Year,0,0,0,0,0.0,0,0,0.0,0.0,34504.92,0.1,Low,Elevated Total Charges
+ACC-0286,Stratum Media 286,Education,28,2989.98,79312.37,One Year,0,0,0,0,0.0,0,0,0.0,0.0,35879.76,0.14,Low,Elevated Total Charges
+ACC-0287,Quantum Media 287,Retail,13,2767.09,32632.38,Month-to-Month,1,3,3,1,5.0,0,0,0.333,0.231,33205.08,0.99,High,Elevated Escalation Rate
+ACC-0288,Synergy Labs 288,Healthcare,23,3372.78,76528.87,One Year,0,4,4,0,2.5,0,1,0.0,0.174,40473.36,0.14,Low,Elevated Monthly Charges
+ACC-0289,Cloud Systems 289,Technology,22,2794.12,56817.31,Month-to-Month,1,7,7,3,6.0,1,0,0.429,0.318,33529.44,0.99,High,Elevated Escalated Cases
+ACC-0290,Nova Systems 290,Education,33,3573.18,122600.7,Month-to-Month,1,6,6,2,10.83,0,1,0.333,0.182,42878.16,0.97,High,Elevated Escalated Cases
+ACC-0291,Synergy Solutions 291,Retail,8,499.0,3728.8,Month-to-Month,1,5,5,1,0.6,0,0,0.2,0.625,5988.0,0.95,High,Elevated Tenure Months
+ACC-0292,Cloud Ventures 292,Healthcare,8,2998.17,22174.24,One Year,0,4,4,0,4.5,0,1,0.0,0.5,35978.04,0.12,Low,Elevated Tenure Months
+ACC-0293,Nexus Labs 293,Manufacturing,20,2086.86,39267.2,One Year,0,4,4,1,0.25,0,0,0.25,0.2,25042.32,0.15,Low,Elevated Escalated Cases
+ACC-0294,Nexus Analytics 294,Finance,13,2272.1,26939.01,One Year,0,1,1,0,0.0,0,0,0.0,0.077,27265.2,0.17,Low,Elevated Tenure Months
+ACC-0295,Nova Logistics 295,Finance,13,1884.0,25045.22,Two Year,0,1,1,0,4.0,0,0,0.0,0.077,22608.0,0.08,Low,Elevated Tenure Months
+ACC-0296,Nexus Logistics 296,Education,13,1758.64,23986.7,Month-to-Month,1,5,5,2,2.6,0,2,0.4,0.385,21103.68,0.99,High,Elevated Escalated Cases
+ACC-0297,Apex Health 297,Finance,16,2406.59,38032.0,Month-to-Month,1,10,10,5,6.2,0,4,0.5,0.625,28879.08,1.0,High,Elevated Escalated Cases
+ACC-0298,Stratum Health 298,Technology,44,2280.81,98315.47,Month-to-Month,0,3,3,0,1.33,0,1,0.0,0.068,27369.72,0.2,Low,Elevated Contract Type One Year
+ACC-0299,Stratum Ventures 299,Healthcare,7,2028.91,13898.59,One Year,1,1,1,0,1.0,0,0,0.0,0.143,24346.92,0.53,Medium,Elevated Tenure Months
+ACC-0300,Vertex Systems 300,Retail,8,2676.43,21386.47,Month-to-Month,1,4,4,2,2.5,0,1,0.5,0.5,32117.16,0.99,High,Elevated Escalated Cases
