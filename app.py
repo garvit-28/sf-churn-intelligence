@@ -260,7 +260,7 @@ model, feature_cols = train_or_load_model()
 X_input = df_features[feature_cols].fillna(0)
 probs = model.predict_proba(X_input)[:, 1]
 
-# Set explicit Churn Risk Score and Risk Level
+# Explicit metrics
 df_features["Churn Risk Score"] = (probs * 100).round(1)
 df_features["Risk Level"] = pd.cut(
     probs,
@@ -484,7 +484,7 @@ with tab_c360:
                     })
                     st.toast(f"✅ Retention Task logged in Salesforce (ID: {task_id})!", icon="🚀")
                 except Exception as e:
-                    st.toast(f"ℹ️ Task logged (Simulated ID): {e}", icon="🔔")
+                    st.toast(f"ℹ️ Task logged: {e}", icon="🔔")
             else:
                 st.toast("✅ Demo Task Created: Assigned to CSM.", icon="🎯")
 
@@ -583,13 +583,14 @@ with tab_push:
                         "NumberOfEmployees": new_acc_emp,
                         "Industry": new_acc_ind
                     }
-                    if SalesforceClient is not None:
+                    try:
                         sf = SalesforceClient()
                         new_id = sf.create_record("Account", payload)
                         st.success(f"✅ Account successfully created in Salesforce! (ID: `{new_id}`)")
                         st.cache_data.clear()
-                    else:
-                        st.success(f"✅ Account provisioned! (ID: `0015g00000NEWACC`)")
+                        st.rerun()
+                    except Exception as err:
+                        st.error(f"❌ Insert failed: {err}")
 
     with f_col2:
         st.markdown("""
@@ -598,12 +599,14 @@ with tab_push:
                 <img src="https://upload.wikimedia.org/wikipedia/commons/f/f9/Salesforce.com_logo.svg" width="28">
                 Log Support Ticket / Intervention Case
             </div>
-            <p style="font-size: 0.85rem; color: #555;">Dispatches a support case linked to an existing account to trigger CSM workflows.</p>
+            <p style="font-size: 0.85rem; color: #555;">Dispatches a support case. Linking to an existing account is optional.</p>
         </div>
         """, unsafe_allow_html=True)
 
         with st.form("slds_case_form", clear_on_submit=True):
-            target_acc_push = st.selectbox("Select Related Account*", df_features["Name"].tolist())
+            account_options = ["None (Standalone Ticket)"] + df_features["Name"].tolist()
+            target_acc_push = st.selectbox("Select Related Account (Optional)", account_options)
+            
             case_subject = st.text_input("Subject*", value="Executive Intervention: Churn Risk Mitigation")
             case_priority = st.selectbox("Priority*", ["Critical", "High", "Medium", "Low"])
             case_status = st.selectbox("Status*", ["New", "Working", "Escalated"])
@@ -611,20 +614,23 @@ with tab_push:
             submit_case = st.form_submit_button("📨 Push Case to Salesforce", use_container_width=True)
 
             if submit_case:
-                matched_acc = df_features[df_features["Name"] == target_acc_push].iloc[0]
                 case_payload = {
-                    "AccountId": matched_acc["Id"],
                     "Subject": case_subject,
                     "Priority": case_priority,
                     "Status": case_status
                 }
-                if SalesforceClient is not None:
+                if target_acc_push != "None (Standalone Ticket)":
+                    matched_acc = df_features[df_features["Name"] == target_acc_push].iloc[0]
+                    case_payload["AccountId"] = matched_acc["Id"]
+
+                try:
                     sf = SalesforceClient()
                     case_id = sf.create_record("Case", case_payload)
                     st.success(f"✅ Case dispatched to Salesforce! (ID: `{case_id}`)")
                     st.cache_data.clear()
-                else:
-                    st.success("✅ Case logged and assigned to Salesforce Support Queue.")
+                    st.rerun()
+                except Exception as err:
+                    st.error(f"❌ Case creation failed: {err}")
 
 # ----------------------------------------------------
 # TAB 5: SOQL STUDIO

@@ -1,6 +1,6 @@
 """
 Salesforce Data Engine Client
-Supports 2-Way REST API sync (Query, Create, Update), CLI execution, and local SOQL parsing.
+Supports direct CLI Session Token authentication, REST API execution, and local snapshot parsing.
 """
 
 import os
@@ -72,7 +72,31 @@ class SalesforceClient:
         self._init_cloud_api()
 
     def _init_cloud_api(self):
-        """Attempts connection via simple-salesforce if secrets are configured."""
+        """Initializes connection via CLI active OAuth session or Streamlit Secrets."""
+        # 1. Primary: Direct Active CLI Session (Bypasses password/token issues)
+        try:
+            env = os.environ.copy()
+            env["SF_TEMP_SHOW_SECRETS"] = "true"
+            res = subprocess.run(
+                "sf org display --json",
+                shell=True,
+                capture_output=True,
+                text=True,
+                env=env
+            )
+            if res.returncode == 0:
+                data = json.loads(res.stdout).get("result", {})
+                access_token = data.get("accessToken")
+                instance_url = data.get("instanceUrl")
+                if access_token and instance_url:
+                    from simple_salesforce import Salesforce
+                    self.sf_api = Salesforce(instance_url=instance_url, session_id=access_token)
+                    logging.info(f"Connected to Salesforce Org via active CLI session: {instance_url}")
+                    return
+        except Exception as e:
+            logging.warning(f"CLI auto-auth skipped: {e}")
+
+        # 2. Secondary: Streamlit Secrets / Environment variables
         username = None
         password = None
         security_token = ""
@@ -103,7 +127,7 @@ class SalesforceClient:
                     security_token=security_token,
                     domain=domain
                 )
-                logging.info("Connected to live Salesforce REST API.")
+                logging.info("Connected to live Salesforce REST API via credentials.")
             except Exception as e:
                 logging.warning(f"Salesforce API connection skipped: {e}")
                 self.sf_api = None
@@ -125,22 +149,7 @@ class SalesforceClient:
             except Exception as e:
                 logging.warning(f"REST API query failed: {e}")
 
-        # 2. Salesforce CLI
-        try:
-            cmd = f'sf data query --query "{clean_soql}" --json'
-            result = subprocess.run(cmd, shell=True, capture_output=True)
-            if result.returncode == 0 and result.stdout:
-                decoded_str = decode_output(result.stdout)
-                data = json.loads(decoded_str)
-                records = data.get("result", {}).get("records", [])
-                for r in records:
-                    r.pop("attributes", None)
-                if records:
-                    return pd.DataFrame(records)
-        except Exception as e:
-            logging.warning(f"CLI Query Execution failed: {e}")
-
-        # 3. Local CSV Snapshot
+        # 2. Fallback: Local CSV Snapshot
         target_entity = "case" if "from case" in clean_soql.lower() else "account"
         candidates = (
             ["data/raw_cases.csv", "data/cases.csv"]
@@ -161,53 +170,20 @@ class SalesforceClient:
         return pd.DataFrame()
 
     def create_record(self, sobject: str, values: Dict[str, Any]) -> str:
-        """Creates a record in Salesforce (Live API, Local CLI, or Local Snapshot)."""
+        """Creates a record directly in live Salesforce."""
         logging.info(f"Creating {sobject} with payload: {values}")
         
-        # 1. Live REST API
         if self.sf_api:
             try:
                 obj = getattr(self.sf_api, sobject)
                 res = obj.create(values)
-                return res.get("id", "001LIVE_SUCCESS_ID")
+                if res.get("success") or "id" in res:
+                    return res.get("id")
             except Exception as e:
-                logging.warning(f"REST API create failed: {e}")
+                logging.error(f"Live REST API create failed: {e}")
+                raise RuntimeError(f"Salesforce API Error: {e}")
 
-        # 2. Salesforce CLI
-        try:
-            fields_str = " ".join([f'{k}="{v}"' for k, v in values.items()])
-            cmd = f'sf data create record --sobject {sobject} --values {fields_str} --json'
-            result = subprocess.run(cmd, shell=True, capture_output=True)
-            if result.returncode == 0 and result.stdout:
-                data = json.loads(decode_output(result.stdout))
-                return data.get("result", {}).get("id", "001CLI_SUCCESS_ID")
-        except Exception as e:
-            logging.warning(f"CLI Create failed: {e}")
-
-        # 3. Local In-Memory / File Append simulation
-        sim_id = f"0015g00000{abs(hash(str(values))) % 1000000:06d}AAA"
-        if sobject.lower() == "account":
-            acc_file = "data/raw_accounts.csv" if os.path.exists("data/raw_accounts.csv") else "data/accounts.csv"
-            if os.path.exists(acc_file):
-                try:
-                    for enc in ["utf-16", "utf-8-sig", "utf-8", "latin-1"]:
-                        try:
-                            df = pd.read_csv(acc_file, encoding=enc)
-                            new_row = pd.DataFrame([{
-                                "Id": sim_id,
-                                "Name": values.get("Name", "New Account"),
-                                "AnnualRevenue": values.get("AnnualRevenue", 500000),
-                                "NumberOfEmployees": values.get("NumberOfEmployees", 100),
-                                "Industry": values.get("Industry", "Technology")
-                            }])
-                            df = pd.concat([df, new_row], ignore_index=True)
-                            df.to_csv(acc_file, index=False, encoding="utf-8")
-                            break
-                        except Exception:
-                            continue
-                except Exception as e:
-                    logging.warning(f"Failed to append to local CSV: {e}")
-        return sim_id
+        raise ConnectionError("No active Salesforce connection found. Ensure CLI session or secrets are active.")
 
     def update_record(self, sobject: str, record_id: str, values: Dict[str, Any]) -> bool:
         """Updates an existing record in Salesforce."""
@@ -217,5 +193,6 @@ class SalesforceClient:
                 obj.update(record_id, values)
                 return True
             except Exception as e:
-                logging.warning(f"REST API update failed: {e}")
-        return True
+                logging.error(f"REST API update failed: {e}")
+                raise RuntimeError(f"Salesforce API Error: {e}")
+        return False
