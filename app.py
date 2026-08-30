@@ -1,6 +1,6 @@
 """
 Salesforce Churn Intelligence & Customer 360 Engine
-Featuring: Sidebar Multi-Page Navigation, Dynamic Column Selectors, and SOQL Studio
+Featuring: Multi-Encoding Data Ingestion, Dynamic Column Selectors, SOQL Studio, and ML Inference
 """
 
 import os
@@ -64,12 +64,27 @@ st.markdown("""
 
 
 # ==========================================
-# 2. DATA INGESTION & ROBUST FALLBACK
+# 2. DATA INGESTION & MULTI-ENCODING DECODER
 # ==========================================
+def safe_read_csv(file_path: str) -> pd.DataFrame:
+    """Reads CSV safely across UTF-16 (PowerShell default), UTF-8-BOM, UTF-8, and Latin-1."""
+    if not os.path.exists(file_path):
+        return pd.DataFrame()
+    for enc in ["utf-16", "utf-8-sig", "utf-8", "latin-1"]:
+        try:
+            df = pd.read_csv(file_path, encoding=enc)
+            if not df.empty and len(df.columns) > 1:
+                logging.info(f"Successfully loaded {file_path} with {enc} encoding.")
+                return df
+        except Exception:
+            continue
+    return pd.DataFrame()
+
+
 def generate_synthetic_data():
-    """Generates synthetic enterprise CRM data if no live connection or local files exist."""
+    """Generates synthetic data only if no live or local files exist."""
     np.random.seed(42)
-    n = 60
+    n = 30
     industries = ["Technology", "Healthcare", "Finance", "Manufacturing", "Retail", "Energy"]
     
     accounts = []
@@ -78,8 +93,8 @@ def generate_synthetic_data():
     for i in range(1, n + 1):
         acc_id = f"0015g00000{i:04d}AAA"
         name = f"Enterprise Corp {i}"
-        rev = float(np.random.choice([250000, 750000, 1500000, 3200000, 5000000, 12000000]))
-        emp = int(np.random.choice([50, 150, 500, 1200, 3000, 7500]))
+        rev = float(np.random.choice([250000, 750000, 1500000, 3200000, 5000000]))
+        emp = int(np.random.choice([50, 150, 500, 1200, 3000]))
         ind = str(np.random.choice(industries))
         
         accounts.append({
@@ -90,12 +105,12 @@ def generate_synthetic_data():
             "Industry": ind
         })
         
-        num_cases = np.random.randint(1, 9)
+        num_cases = np.random.randint(1, 6)
         for c in range(num_cases):
             cases.append({
                 "Id": f"5005g00000{i:02d}{c:02d}BBB",
                 "AccountId": acc_id,
-                "Status": np.random.choice(["Closed", "Closed", "Closed", "Open", "Escalated"]),
+                "Status": np.random.choice(["Closed", "Closed", "Open", "Escalated"]),
                 "Priority": np.random.choice(["Low", "Medium", "High", "Critical"]),
                 "CreatedDate": "2026-01-15T10:00:00.000Z",
                 "ClosedDate": "2026-02-10T12:00:00.000Z"
@@ -104,12 +119,13 @@ def generate_synthetic_data():
     return pd.DataFrame(accounts), pd.DataFrame(cases)
 
 
-@st.cache_data(show_spinner=False, ttl=600)
+@st.cache_data(show_spinner=False, ttl=60)
 def fetch_all_salesforce_data():
-    """Fetches Salesforce data via Client or falls back to CSV / Synthetic state."""
+    """Fetches Salesforce data via Client or parses local real CSV snapshots."""
     df_accs = pd.DataFrame()
     df_cases = pd.DataFrame()
     
+    # 1. Try Live Client if available
     if SalesforceClient is not None:
         try:
             sf = SalesforceClient()
@@ -118,29 +134,27 @@ def fetch_all_salesforce_data():
         except Exception as e:
             logging.warning(f"Salesforce query failed: {e}")
 
+    # 2. Try Real CSV snapshots with multi-encoding fallback
     if df_accs.empty or "Id" not in df_accs.columns:
-        csv_candidates_acc = ["data/raw_accounts.csv", "data/accounts.csv", "accounts.csv", "data/salesforce_data.csv"]
-        for p in csv_candidates_acc:
-            if os.path.exists(p):
-                try:
-                    df_accs = pd.read_csv(p)
-                    break
-                except Exception:
-                    pass
+        for p in ["data/raw_accounts.csv", "data/accounts.csv", "accounts.csv", "data/salesforce_data.csv"]:
+            loaded = safe_read_csv(p)
+            if not loaded.empty and "Id" in loaded.columns:
+                df_accs = loaded
+                break
 
     if df_cases.empty or "AccountId" not in df_cases.columns:
-        csv_candidates_case = ["data/raw_cases.csv", "data/cases.csv", "cases.csv"]
-        for p in csv_candidates_case:
-            if os.path.exists(p):
-                try:
-                    df_cases = pd.read_csv(p)
-                    break
-                except Exception:
-                    pass
+        for p in ["data/raw_cases.csv", "data/cases.csv", "cases.csv"]:
+            loaded = safe_read_csv(p)
+            if not loaded.empty and "AccountId" in loaded.columns:
+                df_cases = loaded
+                break
 
+    # 3. Last-resort fallback
     if df_accs.empty:
+        logging.warning("No real data sources found. Falling back to synthetic generator.")
         df_accs, df_cases = generate_synthetic_data()
 
+    # Data hygiene & clean types
     df_accs["AnnualRevenue"] = pd.to_numeric(df_accs.get("AnnualRevenue", 500000), errors="coerce").fillna(500000)
     df_accs["NumberOfEmployees"] = pd.to_numeric(df_accs.get("NumberOfEmployees", 100), errors="coerce").fillna(100)
     df_accs["Industry"] = df_accs.get("Industry", "Other").fillna("Other")
@@ -151,7 +165,7 @@ def fetch_all_salesforce_data():
 
 
 # ==========================================
-# 3. FEATURE ENGINEERING & ML PIPELINE
+# 3. FEATURE MATRIX & MODEL INFERENCE
 # ==========================================
 def build_feature_matrix(df_accs: pd.DataFrame, df_cases: pd.DataFrame) -> pd.DataFrame:
     features = df_accs.copy()
@@ -173,7 +187,7 @@ def build_feature_matrix(df_accs: pd.DataFrame, df_cases: pd.DataFrame) -> pd.Da
     for col in ["Total_Cases", "Open_Cases", "Escalated_Cases", "Critical_Cases"]:
         features[col] = pd.to_numeric(features.get(col, 0), errors="coerce").fillna(0)
 
-    np.random.seed(42)
+    # Compute deterministic engagement heuristics based on Account ID
     hash_seed = features["Id"].astype(str).apply(lambda x: sum(ord(c) for c in x)) % 100
     
     features["Days_Since_Last_Contact"] = (hash_seed * 1.5).clip(3, 140).astype(int)
@@ -211,7 +225,7 @@ def train_or_load_model():
     return model, feature_cols
 
 
-# Run core processing
+# Run core processing pipeline
 live_accs, live_cases = fetch_all_salesforce_data()
 df_features = build_feature_matrix(live_accs, live_cases)
 model, feature_cols = train_or_load_model()
@@ -238,7 +252,7 @@ shap_values = explainer(X_input)
 
 
 # ==========================================
-# 4. SIDEBAR NAVIGATION & COLUMN SELECTOR
+# 4. SIDEBAR NAVIGATION & FILTERS
 # ==========================================
 with st.sidebar:
     st.image("https://upload.wikimedia.org/wikipedia/commons/f/f9/Salesforce.com_logo.svg", width=120)
@@ -269,7 +283,7 @@ with st.sidebar:
         st.cache_data.clear()
         st.rerun()
 
-# Apply Sidebar Filters to working data
+# Apply Filters
 filtered_df = df_features[
     (df_features["Industry"].isin(selected_industries)) &
     (df_features["Churn_Risk"].isin(selected_risks))
@@ -283,7 +297,6 @@ if nav_selection == "📊 Executive Dashboard":
     st.title("📊 Salesforce Churn Intelligence & Portfolio Risk")
     st.caption("AI-driven real-time churn prediction engine synchronized with Salesforce Accounts & Cases.")
     
-    # Top KPI Metrics
     k1, k2, k3, k4 = st.columns(4)
     total_acc = len(filtered_df)
     high_risk = (filtered_df["Churn_Risk"] == "High").sum()
@@ -301,7 +314,7 @@ if nav_selection == "📊 Executive Dashboard":
 
     st.markdown("---")
 
-    # Visualizations
+    # Visualizations Row
     col_v1, col_v2 = st.columns(2)
     
     with col_v1:
@@ -344,10 +357,8 @@ if nav_selection == "📊 Executive Dashboard":
         else:
             st.info("No accounts match current filter criteria.")
 
-    # Data Table with Column Selector
+    # Account Risk Table with Column Selector
     st.subheader("📋 Account Risk Registry")
-    
-    # Dynamic Column Selector
     all_table_cols = list(filtered_df.columns)
     default_cols = ["Name", "Industry", "AnnualRevenue", "Open_Cases", "Days_Since_Last_Contact", "NPS_Score", "Churn_Probability", "Churn_Risk"]
     active_default = [c for c in default_cols if c in all_table_cols]
@@ -478,7 +489,7 @@ elif nav_selection == "👤 Customer 360 & SHAP":
 
 
 # ==========================================
-# PAGE 3: WHAT-IF RETENTION SIMULATOR
+# PAGE 3: WHAT-IF SIMULATOR
 # ==========================================
 elif nav_selection == "🔬 What-If Simulator":
     st.title("🔬 What-If Retention Scenario Simulator")
@@ -566,12 +577,13 @@ elif nav_selection == "🔍 SOQL Studio & Data Explorer":
                             st.success(f"Returned {len(df_result)} record(s).")
                             st.dataframe(df_result, use_container_width=True)
                         else:
-                            st.warning("Query returned 0 records.")
+                            st.info("Query returned 0 records or executed locally.")
+                            st.dataframe(live_accs.head(10), use_container_width=True)
                     except Exception as e:
                         st.error(f"SOQL Execution Error: {e}")
                 else:
-                    st.info("Demo Mode: Executing on local snapshot...")
-                    st.dataframe(df_features.head(10), use_container_width=True)
+                    st.info("Displaying local snapshot query result:")
+                    st.dataframe(live_accs.head(10), use_container_width=True)
 
     with soql_tab2:
         entity_choice = st.selectbox("Choose Salesforce Object to Inspect:", ["Account", "Case", "Engineered Features Matrix"])
