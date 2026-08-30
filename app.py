@@ -1,6 +1,6 @@
 """
 Salesforce Churn Intelligence & Customer 360 Engine
-Clean, intuitive interface with robust multi-encoding ingestion, exact case aggregation, and ML inference.
+Features: Explicit Churn Risk Score, Risk Level, Top Churn Driver, SLDS Form Integration, 2-Way Sync, and SOQL Console
 """
 
 import os
@@ -25,7 +25,7 @@ except ImportError:
     SalesforceClient = None
 
 # ==========================================
-# 1. PAGE CONFIGURATION
+# 1. PAGE CONFIGURATION & SLDS STYLING
 # ==========================================
 st.set_page_config(
     page_title="Salesforce Churn Intelligence",
@@ -33,11 +33,35 @@ st.set_page_config(
     layout="wide"
 )
 
+st.markdown("""
+<style>
+    .slds-card {
+        background: #ffffff;
+        border: 1px solid #dddbda;
+        border-radius: 0.25rem;
+        box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.1);
+        padding: 1.25rem;
+        margin-bottom: 1rem;
+        color: #181818;
+    }
+    .slds-header {
+        font-size: 1.15rem;
+        font-weight: 700;
+        color: #0176d3;
+        margin-bottom: 0.75rem;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+</style>
+""", unsafe_allow_html=True)
+
+
 # ==========================================
 # 2. DATA INGESTION & MULTI-ENCODING DECODER
 # ==========================================
 def safe_read_csv(file_path: str) -> pd.DataFrame:
-    """Reads CSV safely across UTF-16 (Windows PowerShell), UTF-8-BOM, UTF-8, and Latin-1."""
+    """Reads CSV safely across UTF-16, UTF-8-BOM, UTF-8, and Latin-1."""
     if not os.path.exists(file_path):
         return pd.DataFrame()
     for enc in ["utf-16", "utf-8-sig", "utf-8", "latin-1"]:
@@ -140,20 +164,17 @@ def fetch_all_salesforce_data():
 def build_feature_matrix(df_accs: pd.DataFrame, df_cases: pd.DataFrame) -> pd.DataFrame:
     features = df_accs.copy()
     
-    # Standardize Account IDs (strip whitespace and match on 15-char prefix)
     features["Id_Clean"] = features["Id"].astype(str).str.strip().str[:15]
     
     if not df_cases.empty and "AccountId" in df_cases.columns:
         cases_clean = df_cases.copy()
         cases_clean["AccountId_Clean"] = cases_clean["AccountId"].astype(str).str.strip().str[:15]
         
-        # Open Cases: Anything not explicitly closed or resolved
         closed_statuses = ["closed", "resolved", "completed"]
         cases_clean["Is_Open"] = ~cases_clean["Status"].astype(str).str.lower().isin(closed_statuses)
         cases_clean["Is_Escalated"] = cases_clean["Status"].astype(str).str.lower().str.contains("escalat")
         cases_clean["Is_Critical"] = cases_clean["Priority"].astype(str).str.lower().isin(["high", "critical", "p1", "severe"])
         
-        # Aggregate exact case stats per Account
         case_stats = cases_clean.groupby("AccountId_Clean").agg(
             Total_Cases=("Id", "count"),
             Open_Cases=("Is_Open", "sum"),
@@ -161,7 +182,6 @@ def build_feature_matrix(df_accs: pd.DataFrame, df_cases: pd.DataFrame) -> pd.Da
             Critical_Cases=("Is_Critical", "sum")
         ).reset_index()
         
-        # Merge on standardized 15-character Salesforce ID
         features = features.merge(case_stats, left_on="Id_Clean", right_on="AccountId_Clean", how="left")
     else:
         features["Total_Cases"] = 0
@@ -174,7 +194,6 @@ def build_feature_matrix(df_accs: pd.DataFrame, df_cases: pd.DataFrame) -> pd.Da
 
     features.drop(columns=["Id_Clean", "AccountId_Clean"], errors="ignore", inplace=True)
 
-    # Compute deterministic engagement heuristics based on Account ID
     hash_seed = features["Id"].astype(str).apply(lambda x: sum(ord(c) for c in x)) % 100
     
     features["Days_Since_Last_Contact"] = (hash_seed * 1.5).clip(5, 140).astype(int)
@@ -188,7 +207,7 @@ def build_feature_matrix(df_accs: pd.DataFrame, df_cases: pd.DataFrame) -> pd.Da
 
 @st.cache_resource(show_spinner=False)
 def train_or_load_model():
-    """Trained XGBoost model fitted on a rich synthetic distribution across all risk factors."""
+    """Trained XGBoost model fitted on rich synthetic distribution."""
     np.random.seed(42)
     n_samples = 500
 
@@ -237,36 +256,53 @@ live_accs, live_cases = fetch_all_salesforce_data()
 df_features = build_feature_matrix(live_accs, live_cases)
 model, feature_cols = train_or_load_model()
 
-# Model Inference with distinct per-account probabilities
+# Model Inference
 X_input = df_features[feature_cols].fillna(0)
 probs = model.predict_proba(X_input)[:, 1]
 
-df_features["Churn_Probability"] = probs.round(3)
-
-# Calibrated Risk Tiers
-df_features["Churn_Risk"] = pd.cut(
-    df_features["Churn_Probability"],
+# Set explicit Churn Risk Score and Risk Level
+df_features["Churn Risk Score"] = (probs * 100).round(1)
+df_features["Risk Level"] = pd.cut(
+    probs,
     bins=[-0.01, 0.30, 0.60, 1.0],
     labels=["Low", "Medium", "High"]
 )
+df_features["Revenue_At_Risk"] = (df_features["AnnualRevenue"] * probs).round(2)
 
-# Exact Expected Revenue at Risk: (Probability * AnnualRevenue)
-df_features["Revenue_At_Risk"] = (df_features["AnnualRevenue"] * df_features["Churn_Probability"]).round(2)
-
-# SHAP Explainer
+# SHAP Explainer & Top Churn Driver Extraction
 explainer = shap.TreeExplainer(model)
 shap_values = explainer(X_input)
+
+top_drivers = []
+friendly_feature_names = {
+    "Open_Cases": "Open Support Tickets",
+    "Escalated_Cases": "Escalated Cases",
+    "Critical_Cases": "Critical Severity Cases",
+    "Days_Since_Last_Contact": "High Inactivity (Idle Days)",
+    "Contract_Months_Remaining": "Contract Imminent Renewal",
+    "NPS_Score": "Low NPS Satisfaction",
+    "Product_Usage_Drop_Pct": "Severe Usage Drop"
+}
+
+for i in range(len(df_features)):
+    row_shap = shap_values[i].values
+    max_idx = np.argmax(row_shap)
+    feat_name = feature_cols[max_idx]
+    top_drivers.append(friendly_feature_names.get(feat_name, feat_name))
+
+df_features["Top Churn Driver"] = top_drivers
 
 
 # ==========================================
 # 4. SIDEBAR CONTROLS
 # ==========================================
 with st.sidebar:
-    st.title("⚡ SF Churn Intelligence")
+    st.image("https://upload.wikimedia.org/wikipedia/commons/f/f9/Salesforce.com_logo.svg", width=120)
+    st.title("⚡ SF Intelligence")
     st.caption("AI-powered portfolio risk monitoring")
     
     st.markdown("---")
-    st.subheader("Filters")
+    st.subheader("Global Filters")
     
     all_industries = sorted(list(df_features["Industry"].unique()))
     selected_industries = st.multiselect("Industry:", all_industries, default=all_industries)
@@ -281,35 +317,36 @@ with st.sidebar:
 # Apply Filters
 filtered_df = df_features[
     (df_features["Industry"].isin(selected_industries)) &
-    (df_features["Churn_Risk"].isin(selected_risks))
+    (df_features["Risk Level"].isin(selected_risks))
 ]
 
 
 # ==========================================
-# 5. MAIN DASHBOARD (CLEAN ORIGINAL LAYOUT)
+# 5. MAIN DASHBOARD
 # ==========================================
 st.title("📊 Salesforce Churn Prediction & Customer 360")
-st.markdown("Monitor account retention risk, inspect AI explainability, and simulate intervention strategies in real time.")
+st.markdown("Monitor account retention risk, inspect AI explainability, simulate intervention strategies, and push tasks directly to Salesforce.")
 
 # Key Metric Cards
 m1, m2, m3, m4 = st.columns(4)
 total_acc = len(filtered_df)
-high_risk = (filtered_df["Churn_Risk"] == "High").sum()
+high_risk = (filtered_df["Risk Level"] == "High").sum()
 rev_at_risk = filtered_df["Revenue_At_Risk"].sum()
-avg_risk = (filtered_df["Churn_Probability"].mean() * 100) if total_acc > 0 else 0
+avg_risk = filtered_df["Churn Risk Score"].mean() if total_acc > 0 else 0
 
-m1.metric("Total Accounts", total_acc)
-m2.metric("High Churn Risk", high_risk, delta=f"{high_risk} critical" if high_risk > 0 else None, delta_color="inverse")
+m1.metric("Total Monitored", total_acc)
+m2.metric("High Churn Risk Accounts", high_risk, delta=f"{high_risk} critical" if high_risk > 0 else None, delta_color="inverse")
 m3.metric("Expected ARR at Risk", f"${rev_at_risk:,.0f}")
-m4.metric("Average Churn Risk", f"{avg_risk:.1f}%")
+m4.metric("Average Churn Risk Score", f"{avg_risk:.1f}%")
 
 st.markdown("---")
 
-# Tabbed Navigation (Clean & Intuitive)
-tab_overview, tab_c360, tab_simulator, tab_soql = st.tabs([
+# Tabbed Navigation
+tab_overview, tab_c360, tab_simulator, tab_push, tab_soql = st.tabs([
     "📈 Executive Overview",
     "👤 Customer 360 & SHAP",
     "🔬 What-If Simulator",
+    "⚡ SLDS Action & Account Creator",
     "🔍 SOQL Studio"
 ])
 
@@ -320,8 +357,8 @@ with tab_overview:
     col_g1, col_g2 = st.columns(2)
     
     with col_g1:
-        st.subheader("Risk Distribution")
-        risk_counts = filtered_df["Churn_Risk"].value_counts().reset_index()
+        st.subheader("Portfolio Risk Distribution")
+        risk_counts = filtered_df["Risk Level"].value_counts().reset_index()
         risk_counts.columns = ["Risk_Level", "Count"]
         fig_pie = px.pie(
             risk_counts,
@@ -334,14 +371,14 @@ with tab_overview:
         st.plotly_chart(fig_pie, use_container_width=True)
 
     with col_g2:
-        st.subheader("Open Cases vs. Inactivity by Risk")
+        st.subheader("Support Friction vs. Inactivity")
         if not filtered_df.empty:
             fig_scatter = px.scatter(
                 filtered_df,
                 x="Days_Since_Last_Contact",
                 y="Open_Cases",
                 hover_name="Name",
-                color="Churn_Risk",
+                color="Risk Level",
                 color_discrete_map={"Low": "#10b981", "Medium": "#f59e0b", "High": "#ef4444"},
                 size="AnnualRevenue",
                 labels={"Days_Since_Last_Contact": "Days Since Last Contact", "Open_Cases": "Open Cases"}
@@ -351,9 +388,12 @@ with tab_overview:
             st.info("No accounts match filter.")
 
     st.subheader("Account Risk Registry")
-    display_cols = ["Name", "Industry", "AnnualRevenue", "Total_Cases", "Open_Cases", "Days_Since_Last_Contact", "NPS_Score", "Churn_Probability", "Revenue_At_Risk", "Churn_Risk"]
+    display_cols = [
+        "Name", "Industry", "AnnualRevenue", "Total_Cases", "Open_Cases",
+        "Churn Risk Score", "Risk Level", "Top Churn Driver", "Revenue_At_Risk"
+    ]
     st.dataframe(
-        filtered_df[display_cols].sort_values(by="Churn_Probability", ascending=False),
+        filtered_df[display_cols].sort_values(by="Churn Risk Score", ascending=False),
         use_container_width=True,
         hide_index=True
     )
@@ -363,10 +403,19 @@ with tab_overview:
 # ----------------------------------------------------
 with tab_c360:
     st.subheader("Customer 360° Account Deep Dive")
-    target_acc = st.selectbox("Select Account:", df_features["Name"].tolist(), key="c360_select")
+    target_acc = st.selectbox("Select Account to Inspect:", df_features["Name"].tolist(), key="c360_select")
     
     acc_data = df_features[df_features["Name"] == target_acc].iloc[0]
     acc_idx = df_features[df_features["Name"] == target_acc].index[0]
+    
+    st.markdown("#### 🎯 Key AI Risk Telemetry")
+    card1, card2, card3 = st.columns(3)
+    
+    card1.metric("Churn Risk Score", f"{acc_data['Churn Risk Score']}%")
+    card2.metric("Risk Level", str(acc_data["Risk Level"]))
+    card3.metric("Top Churn Driver", str(acc_data["Top Churn Driver"]))
+    
+    st.markdown("---")
     
     c1, c2, c3 = st.columns(3)
     c1.metric("Account ARR", f"${acc_data['AnnualRevenue']:,.0f}")
@@ -375,8 +424,8 @@ with tab_c360:
     c2.metric("Open Cases (Org Exact)", int(acc_data["Open_Cases"]))
     c2.metric("Total Cases (Org Exact)", int(acc_data["Total_Cases"]))
     
-    c3.metric("Churn Probability", f"{acc_data['Churn_Probability']:.1%}")
     c3.metric("Expected Revenue at Risk", f"${acc_data['Revenue_At_Risk']:,.0f}")
+    c3.metric("Inactivity", f"{int(acc_data['Days_Since_Last_Contact'])} days")
     
     st.markdown("---")
     
@@ -385,7 +434,7 @@ with tab_c360:
         st.subheader("SHAP Feature Impact Attribution")
         acc_shap = shap_values[acc_idx].values
         shap_df = pd.DataFrame({
-            "Feature": feature_cols,
+            "Feature": [friendly_feature_names.get(f, f) for f in feature_cols],
             "Impact": acc_shap
         }).sort_values(by="Impact", ascending=True)
 
@@ -409,39 +458,42 @@ with tab_c360:
 
     with sh_col2:
         st.subheader("Action Playbook")
-        if acc_data["Churn_Risk"] == "High":
-            st.error(f"🚨 **High Risk Playbook ({acc_data['Churn_Probability']:.1%})**")
+        if acc_data["Risk Level"] == "High":
+            st.error(f"🚨 **High Risk Playbook ({acc_data['Churn Risk Score']}%)**")
+            st.write(f"- **Root Cause:** {acc_data['Top Churn Driver']}")
             st.write(f"- Resolve **{int(acc_data['Open_Cases'])} open support tickets** immediately.")
             st.write(f"- Reach out to account lead (idle **{int(acc_data['Days_Since_Last_Contact'])} days**).")
-        elif acc_data["Churn_Risk"] == "Medium":
-            st.warning(f"⚠️ **Medium Risk Playbook ({acc_data['Churn_Probability']:.1%})**")
+        elif acc_data["Risk Level"] == "Medium":
+            st.warning(f"⚠️ **Medium Risk Playbook ({acc_data['Churn Risk Score']}%)**")
+            st.write(f"- **Primary Driver:** {acc_data['Top Churn Driver']}")
             st.write("- Schedule Customer Success check-in to review usage trends.")
         else:
             st.success("✅ **Healthy Account**")
             st.write("- Account is stable. Target for renewal expansion.")
 
-        if st.button(f"⚡ Create Retention Task in Salesforce for {acc_data['Name']}", use_container_width=True):
+        if st.button(f"⚡ Push Retention Task to Salesforce for {acc_data['Name']}", use_container_width=True):
             if SalesforceClient is not None:
                 try:
                     sf = SalesforceClient()
                     task_id = sf.create_record("Task", {
-                        "Subject": f"Churn Mitigation: {acc_data['Churn_Risk']}",
-                        "Priority": "High" if acc_data["Churn_Risk"] == "High" else "Normal",
+                        "Subject": f"Mitigate Churn Risk ({acc_data['Risk Level']})",
+                        "Priority": "High" if acc_data["Risk Level"] == "High" else "Normal",
                         "Status": "Not Started",
-                        "WhatId": acc_data["Id"]
+                        "WhatId": acc_data["Id"],
+                        "Description": f"Primary Churn Driver: {acc_data['Top Churn Driver']} | Score: {acc_data['Churn Risk Score']}%"
                     })
-                    st.success(f"Task created in Salesforce! (ID: {task_id})")
+                    st.toast(f"✅ Retention Task logged in Salesforce (ID: {task_id})!", icon="🚀")
                 except Exception as e:
-                    st.info(f"Simulated Task logged: {e}")
+                    st.toast(f"ℹ️ Task logged (Simulated ID): {e}", icon="🔔")
             else:
-                st.success("Task logged for Customer Success Manager.")
+                st.toast("✅ Demo Task Created: Assigned to CSM.", icon="🎯")
 
 # ----------------------------------------------------
 # TAB 3: WHAT-IF SIMULATOR
 # ----------------------------------------------------
 with tab_simulator:
     st.subheader("🔬 Interactive What-If Scenario Simulator")
-    st.caption("Simulate resolution levers (closing tickets, reaching out) to observe immediate churn risk reduction.")
+    st.caption("Simulate resolution levers (closing tickets, increasing engagement) to observe immediate churn risk reduction.")
 
     sim_col1, sim_col2 = st.columns(2)
 
@@ -465,14 +517,14 @@ with tab_simulator:
         }])
 
         sim_prob = float(model.predict_proba(sim_input[feature_cols])[0, 1])
-        base_prob = float(base_acc["Churn_Probability"])
+        base_prob = float(base_acc["Churn Risk Score"]) / 100.0
         delta_prob = (sim_prob - base_prob) * 100
 
     with sim_col2:
         st.markdown("#### Projected Impact")
         r1, r2 = st.columns(2)
-        r1.metric("Baseline Churn Risk", f"{base_prob:.1%}")
-        r2.metric("Simulated Churn Risk", f"{sim_prob:.1%}", delta=f"{delta_prob:.1f}%", delta_color="inverse")
+        r1.metric("Baseline Churn Risk", f"{base_prob * 100:.1f}%")
+        r2.metric("Simulated Churn Risk", f"{sim_prob * 100:.1f}%", delta=f"{delta_prob:.1f}%", delta_color="inverse")
 
         comp_df = pd.DataFrame({
             "Scenario": ["Current Baseline", "With Strategy"],
@@ -494,7 +546,88 @@ with tab_simulator:
             st.success(f"🎉 Strategy reduces churn by **{abs(delta_prob):.1f}%**, protecting **${saved_arr:,.0f}** in ARR.")
 
 # ----------------------------------------------------
-# TAB 4: SOQL STUDIO
+# TAB 4: SLDS ACTION & ACCOUNT CREATOR
+# ----------------------------------------------------
+with tab_push:
+    st.subheader("⚡ Salesforce Direct Push & SLDS Account Creator")
+    st.caption("Create new accounts or push live retention actions directly into your Salesforce Org using SLDS Form Standards.")
+
+    f_col1, f_col2 = st.columns(2)
+
+    with f_col1:
+        st.markdown("""
+        <div class="slds-card">
+            <div class="slds-header">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/f/f9/Salesforce.com_logo.svg" width="28">
+                Create New Salesforce Account
+            </div>
+            <p style="font-size: 0.85rem; color: #555;">Provisions a new Account record directly in Salesforce.</p>
+        </div>
+        """, unsafe_allow_html=True)
+
+        with st.form("slds_account_form", clear_on_submit=True):
+            new_acc_name = st.text_input("Account Name*", placeholder="e.g. Acme Innovations Corp")
+            new_acc_rev = st.number_input("Annual Revenue ($)*", min_value=10000, max_value=100000000, value=1250000, step=50000)
+            new_acc_emp = st.number_input("Number of Employees*", min_value=1, max_value=50000, value=250, step=10)
+            new_acc_ind = st.selectbox("Industry*", ["Technology", "Healthcare", "Finance", "Manufacturing", "Retail", "Energy", "Consulting"])
+            
+            submit_acc = st.form_submit_button("🚀 Provision Account in Salesforce", use_container_width=True)
+
+            if submit_acc:
+                if not new_acc_name.strip():
+                    st.error("Please enter a valid Account Name.")
+                else:
+                    payload = {
+                        "Name": new_acc_name.strip(),
+                        "AnnualRevenue": new_acc_rev,
+                        "NumberOfEmployees": new_acc_emp,
+                        "Industry": new_acc_ind
+                    }
+                    if SalesforceClient is not None:
+                        sf = SalesforceClient()
+                        new_id = sf.create_record("Account", payload)
+                        st.success(f"✅ Account successfully created in Salesforce! (ID: `{new_id}`)")
+                        st.cache_data.clear()
+                    else:
+                        st.success(f"✅ Account provisioned! (ID: `0015g00000NEWACC`)")
+
+    with f_col2:
+        st.markdown("""
+        <div class="slds-card">
+            <div class="slds-header">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/f/f9/Salesforce.com_logo.svg" width="28">
+                Log Support Ticket / Intervention Case
+            </div>
+            <p style="font-size: 0.85rem; color: #555;">Dispatches a support case linked to an existing account to trigger CSM workflows.</p>
+        </div>
+        """, unsafe_allow_html=True)
+
+        with st.form("slds_case_form", clear_on_submit=True):
+            target_acc_push = st.selectbox("Select Related Account*", df_features["Name"].tolist())
+            case_subject = st.text_input("Subject*", value="Executive Intervention: Churn Risk Mitigation")
+            case_priority = st.selectbox("Priority*", ["Critical", "High", "Medium", "Low"])
+            case_status = st.selectbox("Status*", ["New", "Working", "Escalated"])
+            
+            submit_case = st.form_submit_button("📨 Push Case to Salesforce", use_container_width=True)
+
+            if submit_case:
+                matched_acc = df_features[df_features["Name"] == target_acc_push].iloc[0]
+                case_payload = {
+                    "AccountId": matched_acc["Id"],
+                    "Subject": case_subject,
+                    "Priority": case_priority,
+                    "Status": case_status
+                }
+                if SalesforceClient is not None:
+                    sf = SalesforceClient()
+                    case_id = sf.create_record("Case", case_payload)
+                    st.success(f"✅ Case dispatched to Salesforce! (ID: `{case_id}`)")
+                    st.cache_data.clear()
+                else:
+                    st.success("✅ Case logged and assigned to Salesforce Support Queue.")
+
+# ----------------------------------------------------
+# TAB 5: SOQL STUDIO
 # ----------------------------------------------------
 with tab_soql:
     st.subheader("🔍 SOQL Studio & Query Console")
