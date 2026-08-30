@@ -419,7 +419,7 @@ with tab_c360:
     st.markdown("#### 🎯 Key AI Risk Telemetry")
     card1, card2, card3 = st.columns(3)
     
-    card1.metric("Churn Risk Score", f"{acc_data['Churn Risk Score']}%")
+    card1.metric("Churn Risk Score", f"{float(acc_data['Churn Risk Score']):.1f}%")
     card2.metric("Risk Level", str(acc_data["Risk Level"]))
     card3.metric("Top Churn Driver", str(acc_data["Top Churn Driver"]))
     
