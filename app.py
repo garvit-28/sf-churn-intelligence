@@ -1,6 +1,6 @@
 """
 Salesforce Churn Intelligence & Customer 360 Engine
-Features: Explicit Churn Risk Score, Risk Level, Top Churn Driver, SLDS Form Integration, 2-Way Sync, and SOQL Console
+Features: Dynamic Churn Risk Score, Dynamic Risk Level, Real-Time SHAP Churn Drivers, SLDS Form Integration, 2-Way Sync, and SOQL Console
 """
 
 import os
@@ -159,7 +159,7 @@ def fetch_all_salesforce_data():
 
 
 # ==========================================
-# 3. FEATURE MATRIX & EXACT CASE MATCHING
+# 3. FEATURE MATRIX & DYNAMIC ML PIPELINE
 # ==========================================
 def build_feature_matrix(df_accs: pd.DataFrame, df_cases: pd.DataFrame) -> pd.DataFrame:
     features = df_accs.copy()
@@ -207,7 +207,7 @@ def build_feature_matrix(df_accs: pd.DataFrame, df_cases: pd.DataFrame) -> pd.Da
 
 @st.cache_resource(show_spinner=False)
 def train_or_load_model():
-    """Trained XGBoost model fitted on rich synthetic distribution."""
+    """Trained XGBoost model fitted on synthetic distribution."""
     np.random.seed(42)
     n_samples = 500
 
@@ -251,25 +251,28 @@ def train_or_load_model():
     return model, list(X_train.columns)
 
 
-# Execute processing
+# Execute dynamic processing
 live_accs, live_cases = fetch_all_salesforce_data()
 df_features = build_feature_matrix(live_accs, live_cases)
 model, feature_cols = train_or_load_model()
 
-# Model Inference
+# Model Dynamic Inference
 X_input = df_features[feature_cols].fillna(0)
 probs = model.predict_proba(X_input)[:, 1]
 
-# Explicit metrics
+# Explicit metrics calculated dynamically
 df_features["Churn Risk Score"] = (probs * 100).round(1)
 df_features["Risk Level"] = pd.cut(
     probs,
-    bins=[-0.01, 0.30, 0.60, 1.0],
-    labels=["Low", "Medium", "High"]
-)
+    bins=[-1.0, 0.30, 0.60, 1.1],
+    labels=["Low", "Medium", "High"],
+    include_lowest=True
+).astype(str)
+df_features["Risk Level"] = df_features["Risk Level"].replace({"nan": "Low", "None": "Low"}).fillna("Low")
+
 df_features["Revenue_At_Risk"] = (df_features["AnnualRevenue"] * probs).round(2)
 
-# SHAP Explainer & Top Churn Driver Extraction
+# Dynamic SHAP Explainer & Top Churn Driver Extraction
 explainer = shap.TreeExplainer(model)
 shap_values = explainer(X_input)
 
@@ -286,9 +289,14 @@ friendly_feature_names = {
 
 for i in range(len(df_features)):
     row_shap = shap_values[i].values
-    max_idx = np.argmax(row_shap)
-    feat_name = feature_cols[max_idx]
-    top_drivers.append(friendly_feature_names.get(feat_name, feat_name))
+    risk_score = df_features["Churn Risk Score"].iloc[i]
+    
+    if risk_score < 30.0 or np.max(row_shap) <= 0:
+        top_drivers.append("Healthy Account (Low Risk)")
+    else:
+        max_idx = int(np.argmax(row_shap))
+        feat_name = feature_cols[max_idx]
+        top_drivers.append(friendly_feature_names.get(feat_name, feat_name))
 
 df_features["Top Churn Driver"] = top_drivers
 
