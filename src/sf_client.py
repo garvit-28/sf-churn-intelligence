@@ -1,6 +1,6 @@
 """
 Salesforce Data Engine Client
-Supports direct CLI Session Token authentication, REST API execution, and local snapshot parsing.
+Supports direct Access Token auth, CLI active session detection, REST API execution, and local snapshot fallback.
 """
 
 import os
@@ -15,7 +15,6 @@ logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(me
 
 
 def decode_output(raw_bytes: bytes) -> str:
-    """Decodes CLI bytes safely across UTF-16, UTF-8-SIG, UTF-8, and Latin-1."""
     if not raw_bytes:
         return ""
     for enc in ["utf-8-sig", "utf-16", "utf-8", "latin-1"]:
@@ -27,7 +26,6 @@ def decode_output(raw_bytes: bytes) -> str:
 
 
 def emulate_soql_on_df(df: pd.DataFrame, soql: str) -> pd.DataFrame:
-    """Accurately parses SELECT columns, WHERE filters, and LIMIT count on DataFrame."""
     if df.empty:
         return df
 
@@ -69,11 +67,75 @@ class SalesforceClient:
     def __init__(self, target_org: str = "my-dev-org"):
         self.target_org = target_org
         self.sf_api = None
+        self.auth_errors = []
         self._init_cloud_api()
 
     def _init_cloud_api(self):
-        """Initializes connection via CLI active OAuth session or Streamlit Secrets."""
-        # 1. Primary: Direct Active CLI Session (Bypasses password/token issues)
+        """Initializes connection via Token, CLI session, or User/Pass credentials."""
+        try:
+            from simple_salesforce import Salesforce
+        except ImportError as ie:
+            self.auth_errors.append(f"simple-salesforce library not installed: {ie}")
+            return
+
+        instance_url = None
+        access_token = None
+        username = None
+        password = None
+        security_token = ""
+        domain = "login"
+
+        # 1. Read from Streamlit Secrets
+        try:
+            import streamlit as st
+            if hasattr(st, "secrets"):
+                instance_url = st.secrets.get("SF_INSTANCE_URL")
+                access_token = st.secrets.get("SF_ACCESS_TOKEN") or st.secrets.get("SF_SESSION_ID")
+                username = st.secrets.get("SF_USERNAME")
+                password = st.secrets.get("SF_PASSWORD")
+                security_token = st.secrets.get("SF_SECURITY_TOKEN", "")
+                domain = st.secrets.get("SF_DOMAIN", "login")
+        except Exception as e:
+            self.auth_errors.append(f"Error reading st.secrets: {e}")
+
+        # Fallback to Environment Variables
+        instance_url = instance_url or os.getenv("SF_INSTANCE_URL")
+        access_token = access_token or os.getenv("SF_ACCESS_TOKEN") or os.getenv("SF_SESSION_ID")
+        username = username or os.getenv("SF_USERNAME")
+        password = password or os.getenv("SF_PASSWORD")
+
+        # Clean string inputs
+        if instance_url:
+            instance_url = str(instance_url).strip().rstrip("/")
+        if access_token:
+            access_token = str(access_token).strip()
+
+        # Attempt A: Direct Session ID / Access Token
+        if instance_url and access_token:
+            try:
+                self.sf_api = Salesforce(instance_url=instance_url, session_id=access_token)
+                # Verify token with a simple API probe
+                _ = self.sf_api.sf_version
+                logging.info(f"✅ Connected to Salesforce via Session Token: {instance_url}")
+                return
+            except Exception as e:
+                self.auth_errors.append(f"Session Token connection failed: {e}")
+
+        # Attempt B: Username & Password Auth
+        if username and password:
+            try:
+                self.sf_api = Salesforce(
+                    username=str(username).strip(),
+                    password=str(password).strip(),
+                    security_token=str(security_token).strip(),
+                    domain=str(domain).strip()
+                )
+                logging.info("✅ Connected to Salesforce via Username/Password credentials.")
+                return
+            except Exception as e:
+                self.auth_errors.append(f"Username/Password auth failed: {e}")
+
+        # Attempt C: Local CLI Active Session
         try:
             env = os.environ.copy()
             env["SF_TEMP_SHOW_SECRETS"] = "true"
@@ -84,60 +146,24 @@ class SalesforceClient:
                 text=True,
                 env=env
             )
-            if res.returncode == 0:
+            if res.returncode == 0 and res.stdout:
                 data = json.loads(res.stdout).get("result", {})
-                access_token = data.get("accessToken")
-                instance_url = data.get("instanceUrl")
-                if access_token and instance_url:
-                    from simple_salesforce import Salesforce
-                    self.sf_api = Salesforce(instance_url=instance_url, session_id=access_token)
-                    logging.info(f"Connected to Salesforce Org via active CLI session: {instance_url}")
+                cli_token = data.get("accessToken")
+                cli_url = data.get("instanceUrl")
+                if cli_token and cli_url:
+                    self.sf_api = Salesforce(instance_url=cli_url.rstrip("/"), session_id=cli_token)
+                    logging.info(f"✅ Connected via local CLI session: {cli_url}")
                     return
         except Exception as e:
-            logging.warning(f"CLI auto-auth skipped: {e}")
+            self.auth_errors.append(f"CLI auto-auth skipped: {e}")
 
-        # 2. Secondary: Streamlit Secrets / Environment variables
-        username = None
-        password = None
-        security_token = ""
-        domain = "login"
-
-        try:
-            import streamlit as st
-            if hasattr(st, "secrets"):
-                username = st.secrets.get("SF_USERNAME")
-                password = st.secrets.get("SF_PASSWORD")
-                security_token = st.secrets.get("SF_SECURITY_TOKEN", "")
-                domain = st.secrets.get("SF_DOMAIN", "login")
-        except Exception:
-            pass
-
-        if not username:
-            username = os.getenv("SF_USERNAME")
-            password = os.getenv("SF_PASSWORD")
-            security_token = os.getenv("SF_SECURITY_TOKEN", "")
-            domain = os.getenv("SF_DOMAIN", "login")
-
-        if username and password:
-            try:
-                from simple_salesforce import Salesforce
-                self.sf_api = Salesforce(
-                    username=username,
-                    password=password,
-                    security_token=security_token,
-                    domain=domain
-                )
-                logging.info("Connected to live Salesforce REST API via credentials.")
-            except Exception as e:
-                logging.warning(f"Salesforce API connection skipped: {e}")
-                self.sf_api = None
+        if not instance_url and not username:
+            self.auth_errors.append("No SF_INSTANCE_URL/SF_ACCESS_TOKEN or SF_USERNAME found in st.secrets.")
 
     def query(self, soql: str) -> pd.DataFrame:
-        """Executes SOQL query against live Salesforce org or parses against local snapshot."""
         clean_soql = " ".join(soql.split())
         logging.info(f"Executing SOQL query: {clean_soql}")
 
-        # 1. Live REST API
         if self.sf_api:
             try:
                 res = self.sf_api.query_all(clean_soql)
@@ -149,7 +175,7 @@ class SalesforceClient:
             except Exception as e:
                 logging.warning(f"REST API query failed: {e}")
 
-        # 2. Fallback: Local CSV Snapshot
+        # Fallback to local snapshot
         target_entity = "case" if "from case" in clean_soql.lower() else "account"
         candidates = (
             ["data/raw_cases.csv", "data/cases.csv"]
@@ -170,7 +196,6 @@ class SalesforceClient:
         return pd.DataFrame()
 
     def create_record(self, sobject: str, values: Dict[str, Any]) -> str:
-        """Creates a record directly in live Salesforce."""
         logging.info(f"Creating {sobject} with payload: {values}")
         
         if self.sf_api:
@@ -183,10 +208,10 @@ class SalesforceClient:
                 logging.error(f"Live REST API create failed: {e}")
                 raise RuntimeError(f"Salesforce API Error: {e}")
 
-        raise ConnectionError("No active Salesforce connection found. Ensure CLI session or secrets are active.")
+        diag_msg = " | ".join(self.auth_errors) if self.auth_errors else "Authentication rejected."
+        raise ConnectionError(f"No active Salesforce connection found. Details: {diag_msg}")
 
     def update_record(self, sobject: str, record_id: str, values: Dict[str, Any]) -> bool:
-        """Updates an existing record in Salesforce."""
         if self.sf_api:
             try:
                 obj = getattr(self.sf_api, sobject)
