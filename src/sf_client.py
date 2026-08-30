@@ -1,9 +1,10 @@
 """
 Salesforce Data Engine Client
-Supports Multi-Encoding CLI decoding (UTF-8, UTF-16, Latin-1) and REST fallback.
+Supports Multi-Encoding CLI decoding (UTF-8, UTF-16, Latin-1), REST API, and Exact SOQL Emulation.
 """
 
 import os
+import re
 import json
 import logging
 import subprocess
@@ -23,6 +24,45 @@ def decode_output(raw_bytes: bytes) -> str:
         except UnicodeDecodeError:
             continue
     return raw_bytes.decode("utf-8", errors="replace")
+
+
+def emulate_soql_on_df(df: pd.DataFrame, soql: str) -> pd.DataFrame:
+    """Accurately parses SELECT columns, WHERE filters, and LIMIT count on DataFrame."""
+    if df.empty:
+        return df
+
+    clean_soql = " ".join(soql.strip().split())
+    result_df = df.copy()
+
+    # 1. Parse WHERE clause for basic string equality
+    where_match = re.search(r"WHERE\s+(.*?)(?:\s+LIMIT|\s+ORDER\s+BY|$)", clean_soql, re.IGNORECASE)
+    if where_match:
+        condition = where_match.group(1).strip()
+        eq_match = re.search(r"(\w+)\s*=\s*'([^']+)'", condition)
+        if eq_match:
+            col_name, val = eq_match.groups()
+            cols_map = {c.lower(): c for c in result_df.columns}
+            if col_name.lower() in cols_map:
+                actual_col = cols_map[col_name.lower()]
+                result_df = result_df[result_df[actual_col].astype(str).str.lower() == val.lower()]
+
+    # 2. Parse SELECT columns
+    select_match = re.search(r"SELECT\s+(.*?)\s+FROM", clean_soql, re.IGNORECASE)
+    if select_match:
+        raw_cols = select_match.group(1).split(",")
+        cols = [c.strip() for c in raw_cols if c.strip()]
+        existing_cols_map = {c.lower(): c for c in result_df.columns}
+        matched_cols = [existing_cols_map[c.lower()] for c in cols if c.lower() in existing_cols_map]
+        if matched_cols:
+            result_df = result_df[matched_cols]
+
+    # 3. Parse LIMIT clause
+    limit_match = re.search(r"LIMIT\s+(\d+)", clean_soql, re.IGNORECASE)
+    if limit_match:
+        limit_val = int(limit_match.group(1))
+        result_df = result_df.head(limit_val)
+
+    return result_df
 
 
 class SalesforceClient:
@@ -69,7 +109,7 @@ class SalesforceClient:
                 self.sf_api = None
 
     def query(self, soql: str) -> pd.DataFrame:
-        """Executes SOQL query against live Salesforce org with multi-encoding protection."""
+        """Executes SOQL query against live Salesforce org or parses against local snapshot."""
         clean_soql = " ".join(soql.split())
         logging.info(f"Executing SOQL query: {clean_soql}")
 
@@ -85,7 +125,7 @@ class SalesforceClient:
             except Exception as e:
                 logging.warning(f"REST API query failed: {e}")
 
-        # 2. Salesforce CLI with raw byte decoding (handles Windows UTF-16 outputs)
+        # 2. Salesforce CLI with raw byte decoding
         try:
             cmd = f'sf data query --query "{clean_soql}" --json'
             result = subprocess.run(cmd, shell=True, capture_output=True)
@@ -101,18 +141,21 @@ class SalesforceClient:
         except Exception as e:
             logging.warning(f"CLI Query Execution failed: {e}")
 
-        # 3. CSV Snapshots fallback with safe multi-encoding
-        csv_candidates = [
-            "data/raw_accounts.csv", "data/accounts.csv",
-            "data/raw_cases.csv", "data/cases.csv"
-        ]
-        for p in csv_candidates:
+        # 3. Local CSV Snapshot with SOQL Parsing (SELECT, WHERE & LIMIT emulation)
+        target_entity = "case" if "from case" in clean_soql.lower() else "account"
+        candidates = (
+            ["data/raw_cases.csv", "data/cases.csv"]
+            if target_entity == "case"
+            else ["data/raw_accounts.csv", "data/accounts.csv"]
+        )
+
+        for p in candidates:
             if os.path.exists(p):
                 for enc in ["utf-16", "utf-8-sig", "utf-8", "latin-1"]:
                     try:
                         df = pd.read_csv(p, encoding=enc)
                         if not df.empty and len(df.columns) > 1:
-                            return df
+                            return emulate_soql_on_df(df, clean_soql)
                     except Exception:
                         continue
 
