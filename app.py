@@ -33,7 +33,7 @@ except ImportError:
 # 1. PAGE CONFIGURATION & SLDS STYLING
 # ==========================================
 st.set_page_config(
-    page_title="Customer 360 Pulse",
+    page_title="Customer 360 Pulse - Salesforce AI Churn Intelligence",
     page_icon="⚡",
     layout="wide"
 )
