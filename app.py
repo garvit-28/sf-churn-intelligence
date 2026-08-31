@@ -33,7 +33,7 @@ except ImportError:
 # 1. PAGE CONFIGURATION & SLDS STYLING
 # ==========================================
 st.set_page_config(
-    page_title="Customer 360 Pulse - Salesforce AI Churn Intelligence",
+    page_title="Customer 360 Pulse",
     page_icon="⚡",
     layout="wide"
 )
@@ -357,7 +357,7 @@ def execute_salesforce_sync(data_frame: pd.DataFrame):
 # ==========================================
 with st.sidebar:
     st.image("https://upload.wikimedia.org/wikipedia/commons/f/f9/Salesforce.com_logo.svg", width=120)
-    st.title("⚡ Customer 360 Pulse")
+    st.title("⚡ Customer 360 Pulse - Salesforce AI Churn Intelligence")
     st.caption("Salesforce Custom Field Synchronization")
     
     st.markdown("---")
