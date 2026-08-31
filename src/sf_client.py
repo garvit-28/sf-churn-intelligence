@@ -1,223 +1,84 @@
 """
-Salesforce Data Engine Client
-Supports direct Access Token auth, CLI active session detection, REST API execution, and local snapshot fallback.
+Salesforce REST & Bulk API Client Wrapper
+Handles authentication, dynamic SOQL queries, and DML operations (Create, Update).
 """
 
 import os
-import re
-import json
 import logging
-import subprocess
-from typing import Dict, Any, Optional
 import pandas as pd
+from simple_salesforce import Salesforce, SalesforceAuthenticationFailed
 
-logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
-
-
-def decode_output(raw_bytes: bytes) -> str:
-    if not raw_bytes:
-        return ""
-    for enc in ["utf-8-sig", "utf-16", "utf-8", "latin-1"]:
-        try:
-            return raw_bytes.decode(enc)
-        except UnicodeDecodeError:
-            continue
-    return raw_bytes.decode("utf-8", errors="replace")
-
-
-def emulate_soql_on_df(df: pd.DataFrame, soql: str) -> pd.DataFrame:
-    if df.empty:
-        return df
-
-    clean_soql = " ".join(soql.strip().split())
-    result_df = df.copy()
-
-    # 1. Parse WHERE clause
-    where_match = re.search(r"WHERE\s+(.*?)(?:\s+LIMIT|\s+ORDER\s+BY|$)", clean_soql, re.IGNORECASE)
-    if where_match:
-        condition = where_match.group(1).strip()
-        eq_match = re.search(r"(\w+)\s*=\s*'([^']+)'", condition)
-        if eq_match:
-            col_name, val = eq_match.groups()
-            cols_map = {c.lower(): c for c in result_df.columns}
-            if col_name.lower() in cols_map:
-                actual_col = cols_map[col_name.lower()]
-                result_df = result_df[result_df[actual_col].astype(str).str.lower() == val.lower()]
-
-    # 2. Parse SELECT columns
-    select_match = re.search(r"SELECT\s+(.*?)\s+FROM", clean_soql, re.IGNORECASE)
-    if select_match:
-        raw_cols = select_match.group(1).split(",")
-        cols = [c.strip() for c in raw_cols if c.strip()]
-        existing_cols_map = {c.lower(): c for c in result_df.columns}
-        matched_cols = [existing_cols_map[c.lower()] for c in cols if c.lower() in existing_cols_map]
-        if matched_cols:
-            result_df = result_df[matched_cols]
-
-    # 3. Parse LIMIT clause
-    limit_match = re.search(r"LIMIT\s+(\d+)", clean_soql, re.IGNORECASE)
-    if limit_match:
-        limit_val = int(limit_match.group(1))
-        result_df = result_df.head(limit_val)
-
-    return result_df
+logger = logging.getLogger(__name__)
 
 
 class SalesforceClient:
-    def __init__(self, target_org: str = "my-dev-org"):
-        self.target_org = target_org
-        self.sf_api = None
-        self.auth_errors = []
-        self._init_cloud_api()
+    def __init__(self):
+        self.username = os.getenv("SF_USERNAME")
+        self.password = os.getenv("SF_PASSWORD")
+        self.security_token = os.getenv("SF_SECURITY_TOKEN")
+        self.domain = os.getenv("SF_DOMAIN", "login")  # 'login' for prod/developer orgs, 'test' for sandboxes
 
-    def _init_cloud_api(self):
-        """Initializes connection via Token, CLI session, or User/Pass credentials."""
-        try:
-            from simple_salesforce import Salesforce
-        except ImportError as ie:
-            self.auth_errors.append(f"simple-salesforce library not installed: {ie}")
-            return
-
-        instance_url = None
-        access_token = None
-        username = None
-        password = None
-        security_token = ""
-        domain = "login"
-
-        # 1. Read from Streamlit Secrets
-        try:
-            import streamlit as st
-            if hasattr(st, "secrets"):
-                instance_url = st.secrets.get("SF_INSTANCE_URL")
-                access_token = st.secrets.get("SF_ACCESS_TOKEN") or st.secrets.get("SF_SESSION_ID")
-                username = st.secrets.get("SF_USERNAME")
-                password = st.secrets.get("SF_PASSWORD")
-                security_token = st.secrets.get("SF_SECURITY_TOKEN", "")
-                domain = st.secrets.get("SF_DOMAIN", "login")
-        except Exception as e:
-            self.auth_errors.append(f"Error reading st.secrets: {e}")
-
-        # Fallback to Environment Variables
-        instance_url = instance_url or os.getenv("SF_INSTANCE_URL")
-        access_token = access_token or os.getenv("SF_ACCESS_TOKEN") or os.getenv("SF_SESSION_ID")
-        username = username or os.getenv("SF_USERNAME")
-        password = password or os.getenv("SF_PASSWORD")
-
-        # Clean string inputs
-        if instance_url:
-            instance_url = str(instance_url).strip().rstrip("/")
-        if access_token:
-            access_token = str(access_token).strip()
-
-        # Attempt A: Direct Session ID / Access Token
-        if instance_url and access_token:
-            try:
-                self.sf_api = Salesforce(instance_url=instance_url, session_id=access_token)
-                # Verify token with a simple API probe
-                _ = self.sf_api.sf_version
-                logging.info(f"✅ Connected to Salesforce via Session Token: {instance_url}")
-                return
-            except Exception as e:
-                self.auth_errors.append(f"Session Token connection failed: {e}")
-
-        # Attempt B: Username & Password Auth
-        if username and password:
-            try:
-                self.sf_api = Salesforce(
-                    username=str(username).strip(),
-                    password=str(password).strip(),
-                    security_token=str(security_token).strip(),
-                    domain=str(domain).strip()
-                )
-                logging.info("✅ Connected to Salesforce via Username/Password credentials.")
-                return
-            except Exception as e:
-                self.auth_errors.append(f"Username/Password auth failed: {e}")
-
-        # Attempt C: Local CLI Active Session
-        try:
-            env = os.environ.copy()
-            env["SF_TEMP_SHOW_SECRETS"] = "true"
-            res = subprocess.run(
-                "sf org display --json",
-                shell=True,
-                capture_output=True,
-                text=True,
-                env=env
+        if not all([self.username, self.password, self.security_token]):
+            raise ValueError(
+                "Salesforce credentials missing. Set SF_USERNAME, SF_PASSWORD, and SF_SECURITY_TOKEN in environment variables."
             )
-            if res.returncode == 0 and res.stdout:
-                data = json.loads(res.stdout).get("result", {})
-                cli_token = data.get("accessToken")
-                cli_url = data.get("instanceUrl")
-                if cli_token and cli_url:
-                    self.sf_api = Salesforce(instance_url=cli_url.rstrip("/"), session_id=cli_token)
-                    logging.info(f"✅ Connected via local CLI session: {cli_url}")
-                    return
-        except Exception as e:
-            self.auth_errors.append(f"CLI auto-auth skipped: {e}")
 
-        if not instance_url and not username:
-            self.auth_errors.append("No SF_INSTANCE_URL/SF_ACCESS_TOKEN or SF_USERNAME found in st.secrets.")
+        try:
+            self.sf = Salesforce(
+                username=self.username,
+                password=self.password,
+                security_token=self.security_token,
+                domain=self.domain
+            )
+            logger.info("Connected to Salesforce successfully.")
+        except SalesforceAuthenticationFailed as e:
+            logger.error(f"Salesforce authentication failed: {e}")
+            raise
+        except Exception as e:
+            logger.error(f"Failed to initialize Salesforce client: {e}")
+            raise
 
     def query(self, soql: str) -> pd.DataFrame:
-        clean_soql = " ".join(soql.split())
-        logging.info(f"Executing SOQL query: {clean_soql}")
+        """
+        Executes SOQL and returns results as a clean Pandas DataFrame.
+        Automatically strips Salesforce record metadata attributes.
+        """
+        try:
+            result = self.sf.query_all(soql)
+            records = result.get("records", [])
+            if not records:
+                return pd.DataFrame()
 
-        if self.sf_api:
-            try:
-                res = self.sf_api.query_all(clean_soql)
-                records = res.get("records", [])
-                for r in records:
-                    r.pop("attributes", None)
-                if records:
-                    return pd.DataFrame(records)
-            except Exception as e:
-                logging.warning(f"REST API query failed: {e}")
+            df = pd.DataFrame(records)
+            df.drop(columns=["attributes"], errors="ignore", inplace=True)
+            return df
+        except Exception as e:
+            logger.error(f"SOQL execution failed for query '{soql}': {e}")
+            raise
 
-        # Fallback to local snapshot
-        target_entity = "case" if "from case" in clean_soql.lower() else "account"
-        candidates = (
-            ["data/raw_cases.csv", "data/cases.csv"]
-            if target_entity == "case"
-            else ["data/raw_accounts.csv", "data/accounts.csv"]
-        )
+    def create_record(self, object_name: str, payload: dict) -> str:
+        """
+        Inserts a record into Salesforce and returns the new Record ID.
+        """
+        try:
+            res = getattr(self.sf, object_name).create(payload)
+            if res.get("success"):
+                record_id = res.get("id")
+                logger.info(f"Created {object_name} with ID: {record_id}")
+                return record_id
+            raise Exception(f"Failed to create {object_name}: {res.get('errors')}")
+        except Exception as e:
+            logger.error(f"Error creating {object_name}: {e}")
+            raise
 
-        for p in candidates:
-            if os.path.exists(p):
-                for enc in ["utf-16", "utf-8-sig", "utf-8", "latin-1"]:
-                    try:
-                        df = pd.read_csv(p, encoding=enc)
-                        if not df.empty and len(df.columns) > 1:
-                            return emulate_soql_on_df(df, clean_soql)
-                    except Exception:
-                        continue
-
-        return pd.DataFrame()
-
-    def create_record(self, sobject: str, values: Dict[str, Any]) -> str:
-        logging.info(f"Creating {sobject} with payload: {values}")
-        
-        if self.sf_api:
-            try:
-                obj = getattr(self.sf_api, sobject)
-                res = obj.create(values)
-                if res.get("success") or "id" in res:
-                    return res.get("id")
-            except Exception as e:
-                logging.error(f"Live REST API create failed: {e}")
-                raise RuntimeError(f"Salesforce API Error: {e}")
-
-        diag_msg = " | ".join(self.auth_errors) if self.auth_errors else "Authentication rejected."
-        raise ConnectionError(f"No active Salesforce connection found. Details: {diag_msg}")
-
-    def update_record(self, sobject: str, record_id: str, values: Dict[str, Any]) -> bool:
-        if self.sf_api:
-            try:
-                obj = getattr(self.sf_api, sobject)
-                obj.update(record_id, values)
-                return True
-            except Exception as e:
-                logging.error(f"REST API update failed: {e}")
-                raise RuntimeError(f"Salesforce API Error: {e}")
-        return False
+    def update_record(self, object_name: str, record_id: str, payload: dict) -> bool:
+        """
+        Updates an existing record in Salesforce by Record ID.
+        """
+        try:
+            getattr(self.sf, object_name).update(record_id, payload)
+            logger.info(f"Updated {object_name} {record_id} successfully.")
+            return True
+        except Exception as e:
+            logger.error(f"Error updating {object_name} {record_id}: {e}")
+            raise
