@@ -357,7 +357,7 @@ def execute_salesforce_sync(data_frame: pd.DataFrame):
 # ==========================================
 with st.sidebar:
     st.image("https://upload.wikimedia.org/wikipedia/commons/f/f9/Salesforce.com_logo.svg", width=120)
-    st.title("⚡ Customer 360 Pulse - Salesforce AI Churn Intelligence")
+    st.title("⚡ Customer 360 Pulse")
     st.caption("Salesforce Custom Field Synchronization")
     
     st.markdown("---")
@@ -422,7 +422,7 @@ filtered_df = df_features[
 # ==========================================
 # 6. MAIN DASHBOARD
 # ==========================================
-st.title("📊 Customer 360 Pulse")
+st.title("📊 Customer 360 Pulse - Salesforce AI Churn Intelligence")
 st.markdown("Live retention risk monitoring aligned directly with Salesforce Account custom fields.")
 
 # Key Metric Cards
