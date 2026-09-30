@@ -7,6 +7,9 @@ import os
 import logging
 import pandas as pd
 from simple_salesforce import Salesforce
+from dotenv import load_dotenv
+
+load_dotenv()
 
 logger = logging.getLogger(__name__)
 
