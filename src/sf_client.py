@@ -1,7 +1,7 @@
 
 """
-Salesforce REST Client (OAuth Refresh Token Authentication)
-Automatically obtains a fresh access token when the client is initialized.
+Salesforce REST Client
+OAuth Refresh Token Authentication with detailed error diagnostics.
 """
 
 import os
@@ -22,9 +22,14 @@ class SalesforceClient:
         self.client_id = os.getenv("SF_CLIENT_ID")
         self.client_secret = os.getenv("SF_CLIENT_SECRET")
         self.refresh_token = os.getenv("SF_REFRESH_TOKEN")
-        self.instance_url = os.getenv("SF_INSTANCE_URL", "").rstrip("/")
+
+        self.instance_url = os.getenv(
+            "SF_INSTANCE_URL", ""
+        ).rstrip("/")
+
         self.login_url = os.getenv(
-            "SF_LOGIN_URL", "https://login.salesforce.com"
+            "SF_LOGIN_URL",
+            "https://login.salesforce.com",
         ).rstrip("/")
 
         if not all([
@@ -33,14 +38,17 @@ class SalesforceClient:
             self.refresh_token,
         ]):
             raise ValueError(
-                "Missing Salesforce OAuth credentials. Please set "
-                "SF_CLIENT_ID, SF_CLIENT_SECRET, and SF_REFRESH_TOKEN."
+                "Missing Salesforce OAuth credentials. Check that "
+                "SF_CLIENT_ID, SF_CLIENT_SECRET, and SF_REFRESH_TOKEN "
+                "are configured in Streamlit Secrets."
             )
 
+        self.sf = None
         self._connect()
 
     def _connect(self):
         """Exchange the refresh token for a fresh access token."""
+
         token_url = f"{self.login_url}/services/oauth2/token"
 
         try:
@@ -54,18 +62,59 @@ class SalesforceClient:
                 },
                 timeout=30,
             )
-            response.raise_for_status()
+
+            if not response.ok:
+                # Salesforce normally returns a JSON error response.
+                try:
+                    error_data = response.json()
+                    if isinstance(error_data, dict):
+                        error_code = error_data.get(
+                            "error", "unknown_error"
+                        )
+                        error_description = error_data.get(
+                            "error_description",
+                            "No error description provided.",
+                        )
+                        details = (
+                            f"{error_code}: {error_description}"
+                        )
+                    else:
+                        details = str(error_data)
+                except ValueError:
+                    details = response.text[:500]
+
+                # Never log client secrets, refresh tokens, or access tokens.
+                logger.error(
+                    "Salesforce OAuth token refresh failed "
+                    "(HTTP %s): %s",
+                    response.status_code,
+                    details,
+                )
+
+                raise RuntimeError(
+                    "Salesforce OAuth token refresh failed "
+                    f"(HTTP {response.status_code}): {details}"
+                )
+
             token_data = response.json()
 
-            access_token = token_data["access_token"]
+            access_token = token_data.get("access_token")
+            returned_instance_url = token_data.get("instance_url")
+
+            if not access_token:
+                raise RuntimeError(
+                    "Salesforce OAuth response did not contain "
+                    "an access token."
+                )
+
             self.instance_url = (
-                token_data.get("instance_url") or self.instance_url
+                returned_instance_url or self.instance_url
             ).rstrip("/")
 
             if not self.instance_url:
-                raise ValueError(
-                    "Salesforce did not return an instance URL, and "
-                    "SF_INSTANCE_URL is not configured."
+                raise RuntimeError(
+                    "No Salesforce instance URL was returned. "
+                    "Check SF_INSTANCE_URL in Streamlit Secrets."
                 )
 
             self.sf = Salesforce(
@@ -73,27 +122,23 @@ class SalesforceClient:
                 session_id=access_token,
             )
 
-            logger.info("Connected to Salesforce using OAuth successfully.")
+            logger.info(
+                "Salesforce OAuth authentication completed successfully."
+            )
 
         except requests.RequestException as e:
-            logger.error("Salesforce OAuth token refresh failed.")
-            if e.response is not None:
-                logger.error(
-                    "Salesforce response: %s",
-                    e.response.text[:500],
-                )
+            logger.error(
+                "Unable to contact Salesforce OAuth endpoint: %s",
+                type(e).__name__,
+            )
             raise RuntimeError(
-                "Salesforce authentication failed. Check the OAuth "
-                "credentials and refresh-token configuration."
-            ) from e
-        except (KeyError, ValueError) as e:
-            logger.error("Invalid Salesforce OAuth response or configuration.")
-            raise RuntimeError(
-                "Could not establish the Salesforce connection."
+                "Could not contact Salesforce for authentication. "
+                "Check the login URL and network connection."
             ) from e
 
     def query(self, soql: str) -> pd.DataFrame:
         """Executes SOQL and returns results as a DataFrame."""
+
         try:
             result = self.sf.query_all(soql)
             records = result.get("records", [])
@@ -102,7 +147,11 @@ class SalesforceClient:
                 return pd.DataFrame()
 
             df = pd.DataFrame(records)
-            df.drop(columns=["attributes"], errors="ignore", inplace=True)
+            df.drop(
+                columns=["attributes"],
+                errors="ignore",
+                inplace=True,
+            )
             return df
 
         except Exception as e:
@@ -110,34 +159,50 @@ class SalesforceClient:
             raise
 
     def create_record(self, object_name: str, payload: dict) -> str:
-        """Inserts a record into Salesforce and returns the ID."""
-        try:
-            res = getattr(self.sf, object_name).create(payload)
+        """Inserts a record into Salesforce and returns its ID."""
 
-            if res.get("success"):
-                return res.get("id")
+        try:
+            result = getattr(self.sf, object_name).create(payload)
+
+            if result.get("success"):
+                return result.get("id")
 
             raise RuntimeError(
-                f"Failed to create {object_name}: {res.get('errors')}"
+                f"Failed to create {object_name}: "
+                f"{result.get('errors')}"
             )
 
         except Exception as e:
-            logger.error("Error creating %s: %s", object_name, e)
+            logger.error(
+                "Error creating %s: %s", object_name, e
+            )
             raise
 
     def update_record(
-        self, object_name: str, record_id: str, payload: dict
+        self,
+        object_name: str,
+        record_id: str,
+        payload: dict,
     ) -> bool:
         """Updates an existing Salesforce record."""
+
         try:
-            getattr(self.sf, object_name).update(record_id, payload)
+            getattr(self.sf, object_name).update(
+                record_id, payload
+            )
+
             logger.info(
-                "Updated %s %s successfully.", object_name, record_id
+                "Updated %s %s successfully.",
+                object_name,
+                record_id,
             )
             return True
 
         except Exception as e:
             logger.error(
-                "Error updating %s %s: %s", object_name, record_id, e
+                "Error updating %s %s: %s",
+                object_name,
+                record_id,
+                e,
             )
             raise
